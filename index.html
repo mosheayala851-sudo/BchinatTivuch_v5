@@ -1,0 +1,1940 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<title>בחינת תיווך</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="בחינת תיווך">
+<meta name="theme-color" content="#f8fafc">
+<link rel="apple-touch-icon" id="touch-icon">
+<script>
+(function(){
+  const c=document.createElement('canvas');c.width=180;c.height=180;
+  const x=c.getContext('2d');
+  x.fillStyle='#f0fdf4';x.beginPath();x.roundRect(0,0,180,180,36);x.fill();
+  x.fillStyle='#16a34a';x.beginPath();x.roundRect(8,8,164,164,28);x.fill();
+  x.fillStyle='#f0fdf4';x.beginPath();x.roundRect(16,16,148,148,22);x.fill();
+  x.font='80px serif';x.textAlign='center';x.textBaseline='middle';x.fillText('🏠',90,80);
+  x.font='bold 14px sans-serif';x.fillStyle='#16a34a';x.textBaseline='alphabetic';x.fillText('בחינת תיווך',90,158);
+  const l=document.getElementById('touch-icon');if(l)l.href=c.toDataURL('image/png');
+  if('serviceWorker' in navigator){
+    const sw=`const V='tv2';self.addEventListener('install',e=>{e.waitUntil(caches.open(V).then(c=>c.addAll(['./'])).then(()=>self.skipWaiting()));});self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==V).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});self.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).catch(()=>r||new Response('Offline',{status:503}))));});`;
+    navigator.serviceWorker.register(URL.createObjectURL(new Blob([sw],{type:'application/javascript'})),{scope:'./'});
+  }
+})();
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --white:#ffffff;
+  --gray50:#f8fafc;--gray100:#f1f5f9;--gray200:#e2e8f0;--gray300:#cbd5e1;
+  --gray400:#94a3b8;--gray500:#64748b;--gray600:#475569;--gray700:#334155;
+  --gray800:#1e293b;--gray900:#0f172a;
+  --green50:#f0fdf4;--green100:#dcfce7;--green200:#bbf7d0;--green400:#4ade80;
+  --green500:#22c55e;--green600:#16a34a;--green700:#15803d;
+  --blue50:#eff6ff;--blue100:#dbeafe;--blue200:#bfdbfe;--blue400:#60a5fa;
+  --blue500:#3b82f6;--blue600:#2563eb;--blue700:#1d4ed8;
+  --red50:#fef2f2;--red100:#fee2e2;--red400:#f87171;--red500:#ef4444;--red600:#dc2626;
+  --amber50:#fffbeb;--amber100:#fef3c7;--amber400:#fbbf24;--amber500:#f59e0b;--amber600:#d97706;
+  --purple50:#faf5ff;--purple100:#ede9fe;--purple500:#8b5cf6;--purple600:#7c3aed;
+  --font:'Heebo',sans-serif;
+  --safe-top:env(safe-area-inset-top,0px);
+  --safe-bot:env(safe-area-inset-bottom,0px);
+  --shadow-sm:0 1px 3px rgba(0,0,0,0.06),0 1px 2px rgba(0,0,0,0.04);
+  --shadow:0 4px 6px -1px rgba(0,0,0,0.07),0 2px 4px -1px rgba(0,0,0,0.04);
+  --shadow-md:0 10px 15px -3px rgba(0,0,0,0.07),0 4px 6px -2px rgba(0,0,0,0.04);
+  --shadow-lg:0 20px 25px -5px rgba(0,0,0,0.08),0 10px 10px -5px rgba(0,0,0,0.03);
+  --radius:12px;--radius-lg:16px;--radius-xl:20px;
+}
+html,body{height:100%;background:var(--gray50);color:var(--gray800);font-family:var(--font);overflow:hidden;font-size:15px}
+
+/* ── APP SHELL ── */
+#app{position:fixed;inset:0;display:flex;flex-direction:column;background:var(--gray50)}
+
+/* ── TOP BAR ── */
+.topbar{
+  background:var(--white);border-bottom:1px solid var(--gray200);
+  padding:calc(var(--safe-top) + 10px) 16px 10px;
+  display:flex;align-items:center;gap:10px;flex-shrink:0;
+  box-shadow:var(--shadow-sm);
+}
+.tb-logo-wrap{display:flex;align-items:center;gap:8px}
+.tb-logo-icon{width:32px;height:32px;background:var(--green600);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px}
+.tb-title{font-size:15px;font-weight:800;color:var(--gray800)}
+.tb-sub{font-size:10px;color:var(--gray400);margin-top:1px}
+.tb-spacer{flex:1}
+.tb-badge{
+  background:var(--amber50);border:1px solid var(--amber400);
+  color:var(--amber600);border-radius:20px;padding:5px 12px;
+  font-size:12px;font-weight:700;white-space:nowrap;
+}
+
+/* ── PROGRESS ── */
+.progress-bar{background:var(--white);padding:10px 16px;flex-shrink:0;border-bottom:1px solid var(--gray200)}
+.prog-info{display:flex;justify-content:space-between;font-size:11px;color:var(--gray500);margin-bottom:6px;font-weight:500}
+.prog-track{background:var(--gray200);border-radius:99px;height:6px;overflow:hidden}
+.prog-fill{background:linear-gradient(90deg,var(--green500),var(--green400));height:6px;border-radius:99px;transition:width .4s ease}
+
+/* ── SCROLL ── */
+#scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+#scroll::-webkit-scrollbar{width:4px}
+#scroll::-webkit-scrollbar-thumb{background:var(--gray300);border-radius:4px}
+
+/* ── SCREENS ── */
+.screen{display:none;padding:16px 16px calc(80px + var(--safe-bot)) 16px}
+.screen.active{display:block}
+
+/* ════════════════════════════════
+   HOME SCREEN
+════════════════════════════════ */
+.hero-card{
+  background:linear-gradient(135deg,var(--green600) 0%,var(--green700) 100%);
+  border-radius:var(--radius-xl);padding:24px 20px;
+  margin-bottom:20px;color:white;position:relative;overflow:hidden;
+  box-shadow:var(--shadow-md);
+}
+.hero-card::before{content:'';position:absolute;top:-30px;left:-30px;width:120px;height:120px;background:rgba(255,255,255,0.08);border-radius:50%}
+.hero-card::after{content:'';position:absolute;bottom:-20px;right:-20px;width:100px;height:100px;background:rgba(255,255,255,0.06);border-radius:50%}
+.hero-emoji{font-size:40px;margin-bottom:10px;display:block}
+.hero-title{font-size:20px;font-weight:900;margin-bottom:4px;line-height:1.3}
+.hero-sub{font-size:13px;opacity:.85;line-height:1.6;margin-bottom:18px}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px;position:relative;z-index:1}
+.hstat{background:rgba(255,255,255,0.18);border-radius:var(--radius);padding:10px 6px;text-align:center;backdrop-filter:blur(4px)}
+.hstat-val{font-size:20px;font-weight:900;display:block}
+.hstat-lbl{font-size:10px;opacity:.85;margin-top:1px}
+.start-btn{
+  width:100%;background:white;color:var(--green700);
+  border:none;padding:14px;border-radius:var(--radius);
+  font-family:var(--font);font-size:15px;font-weight:800;cursor:pointer;
+  box-shadow:0 4px 12px rgba(0,0,0,0.15);transition:all .15s;
+  position:relative;z-index:1;
+}
+.start-btn:active{transform:scale(.97)}
+
+.section-hdr{
+  display:flex;align-items:center;gap:6px;
+  font-size:13px;font-weight:700;color:var(--gray600);
+  margin-bottom:10px;letter-spacing:0.3px;
+}
+
+.topic-list{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+.topic-row{
+  background:var(--white);border:1.5px solid var(--gray200);border-radius:var(--radius);
+  padding:12px 14px;display:flex;align-items:center;gap:12px;cursor:pointer;
+  transition:all .15s;box-shadow:var(--shadow-sm);
+}
+.topic-row:active{transform:scale(.98)}
+.topic-row.sel{border-color:var(--green500);background:var(--green50)}
+.tr-icon{width:40px;height:40px;border-radius:10px;background:var(--gray100);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.topic-row.sel .tr-icon{background:var(--green100)}
+.tr-info{flex:1}
+.tr-name{font-size:13px;font-weight:700;color:var(--gray800);margin-bottom:2px}
+.tr-meta{display:flex;align-items:center;gap:8px}
+.tr-count{font-size:11px;color:var(--gray500)}
+.tr-prog{font-size:10px;font-weight:600;color:var(--green600);background:var(--green50);padding:1px 6px;border-radius:99px;border:1px solid var(--green200)}
+.tr-check{width:22px;height:22px;border-radius:50%;border:2px solid var(--gray300);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;font-size:11px}
+.topic-row.sel .tr-check{background:var(--green500);border-color:var(--green500);color:white}
+
+.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px}
+.mode-card{
+  background:var(--white);border:1.5px solid var(--gray200);border-radius:var(--radius);
+  padding:14px 10px;text-align:center;cursor:pointer;transition:all .15s;
+  box-shadow:var(--shadow-sm);
+}
+.mode-card:active{transform:scale(.97)}
+.mode-card.active{border-color:var(--blue500);background:var(--blue50)}
+.mc-icon{font-size:26px;margin-bottom:6px}
+.mc-name{font-size:13px;font-weight:700;color:var(--gray700);margin-bottom:2px}
+.mc-desc{font-size:11px;color:var(--gray400)}
+.mode-card.active .mc-name{color:var(--blue700)}
+
+/* ════════════════════════════════
+   QUIZ SCREEN
+════════════════════════════════ */
+.q-header{
+  background:var(--white);border:1.5px solid var(--gray200);border-radius:var(--radius-lg);
+  padding:14px 16px;margin-bottom:14px;display:flex;align-items:center;gap:12px;
+  box-shadow:var(--shadow-sm);
+}
+.qh-badge{
+  width:42px;height:42px;border-radius:10px;background:var(--green600);
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;font-weight:900;color:white;flex-shrink:0;
+  box-shadow:0 2px 8px rgba(22,163,74,0.3);
+}
+.qh-info{flex:1}
+.qh-topic{font-size:12px;font-weight:700;color:var(--green700);margin-bottom:2px}
+.qh-diff{font-size:11px;color:var(--gray400)}
+.qh-timer{
+  background:var(--red50);border:1.5px solid var(--red400);
+  color:var(--red600);border-radius:10px;padding:6px 10px;
+  font-size:15px;font-weight:800;min-width:46px;text-align:center;
+}
+.qh-timer.urgent{animation:pulse .5s infinite alternate;background:var(--red100)}
+@keyframes pulse{from{background:var(--red50)}to{background:var(--red100)}}
+.qh-timer.hidden{display:none}
+
+.question-card{
+  background:var(--white);border:1.5px solid var(--gray200);border-radius:var(--radius-lg);
+  padding:20px 18px;margin-bottom:14px;box-shadow:var(--shadow-sm);
+}
+.q-label{font-size:10px;font-weight:800;color:var(--blue600);letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;gap:4px}
+.q-text{font-size:16px;font-weight:600;color:var(--gray800);line-height:1.7}
+
+.options{display:flex;flex-direction:column;gap:9px;margin-bottom:14px}
+.opt{
+  background:var(--white);border:1.5px solid var(--gray200);border-radius:var(--radius);
+  padding:13px 14px;cursor:pointer;display:flex;align-items:flex-start;gap:11px;
+  transition:all .15s;min-height:52px;font-family:var(--font);
+  box-shadow:var(--shadow-sm);
+}
+.opt:active:not(:disabled){transform:scale(.98)}
+.opt:hover:not(:disabled){border-color:var(--gray300);background:var(--gray50)}
+.opt-ltr{
+  width:28px;height:28px;border-radius:8px;background:var(--gray100);border:1.5px solid var(--gray300);
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:800;color:var(--gray500);flex-shrink:0;margin-top:1px;
+  transition:all .2s;
+}
+.opt-txt{font-size:14px;color:var(--gray700);line-height:1.55;flex:1;text-align:right}
+.opt.correct{border-color:var(--green500);background:var(--green50)}
+.opt.correct .opt-ltr{background:var(--green500);border-color:var(--green500);color:white}
+.opt.correct .opt-txt{color:var(--green700);font-weight:600}
+.opt.wrong{border-color:var(--red500);background:var(--red50)}
+.opt.wrong .opt-ltr{background:var(--red500);border-color:var(--red500);color:white}
+.opt.wrong .opt-txt{color:var(--red700)}
+.opt.show-right{border-color:var(--green400);background:var(--green50)}
+.opt.show-right .opt-ltr{background:var(--green400);border-color:var(--green400);color:white}
+
+/* FEEDBACK */
+.feedback{
+  border-radius:var(--radius-lg);padding:16px;margin-bottom:14px;
+  display:none;box-shadow:var(--shadow-sm);
+}
+.feedback.show{display:block}
+.feedback.win{background:var(--green50);border:1.5px solid var(--green400)}
+.feedback.lose{background:var(--red50);border:1.5px solid var(--red400)}
+.fb-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.fb-icon{
+  width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;
+}
+.feedback.win .fb-icon{background:var(--green100)}
+.feedback.lose .fb-icon{background:var(--red100)}
+.fb-title{font-size:15px;font-weight:800}
+.feedback.win .fb-title{color:var(--green700)}
+.feedback.lose .fb-title{color:var(--red600)}
+.fb-text{font-size:13px;color:var(--gray600);line-height:1.75;margin-bottom:12px}
+.fb-more-btn{
+  background:white;border:1.5px solid var(--gray300);color:var(--blue600);
+  padding:9px 14px;border-radius:var(--radius);font-family:var(--font);
+  font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;width:100%;
+}
+.fb-more-btn:active{transform:scale(.98);background:var(--gray50)}
+.fb-detail{
+  background:white;border:1.5px solid var(--gray200);border-radius:var(--radius);
+  padding:14px;margin-top:10px;font-size:13px;color:var(--gray600);line-height:1.8;
+  display:none;
+}
+.fb-detail.show{display:block}
+
+.next-btn{
+  width:100%;background:var(--green600);color:white;
+  border:none;padding:15px;border-radius:var(--radius);
+  font-family:var(--font);font-size:15px;font-weight:700;cursor:pointer;
+  box-shadow:0 4px 12px rgba(22,163,74,0.3);transition:all .15s;display:none;
+}
+.next-btn.show{display:block}
+.next-btn:active{transform:scale(.97)}
+
+/* ════════════════════════════════
+   RESULTS
+════════════════════════════════ */
+.result-hero{
+  background:var(--white);border:1.5px solid var(--gray200);border-radius:var(--radius-xl);
+  padding:28px 20px;text-align:center;margin-bottom:16px;box-shadow:var(--shadow-md);
+}
+.res-emoji{font-size:52px;margin-bottom:12px;display:block}
+.res-title{font-size:22px;font-weight:900;color:var(--gray800);margin-bottom:6px}
+.res-score{font-size:52px;font-weight:900;margin:10px 0;line-height:1}
+.res-score.great{color:var(--green600)}
+.res-score.ok{color:var(--amber500)}
+.res-score.poor{color:var(--red500)}
+.res-sub{font-size:13px;color:var(--gray500);margin-bottom:20px}
+.res-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+.rcard{background:var(--gray50);border:1.5px solid var(--gray200);border-radius:var(--radius);padding:12px;text-align:center}
+.rcard-val{font-size:22px;font-weight:900;display:block;margin-bottom:2px}
+.rcard-lbl{font-size:11px;color:var(--gray500)}
+.rcard.g .rcard-val{color:var(--green600)}
+.rcard.r .rcard-val{color:var(--red500)}
+.rcard.b .rcard-val{color:var(--blue600)}
+.rcard.a .rcard-val{color:var(--amber600)}
+.res-actions{display:flex;flex-direction:column;gap:8px}
+.rbtn{
+  padding:13px;border-radius:var(--radius);font-family:var(--font);
+  font-size:14px;font-weight:700;cursor:pointer;transition:all .15s;border:none;
+}
+.rbtn:active{transform:scale(.97)}
+.rbtn.primary{background:var(--green600);color:white;box-shadow:0 4px 12px rgba(22,163,74,0.25)}
+.rbtn.secondary{background:var(--white);border:1.5px solid var(--gray300);color:var(--gray700)}
+
+/* ════════════════════════════════
+   FLASHCARDS
+════════════════════════════════ */
+.fc-wrap{display:flex;flex-direction:column;gap:12px}
+.fc-ctr{text-align:center;font-size:12px;font-weight:600;color:var(--gray500)}
+.fc-card{
+  background:var(--white);border:1.5px solid var(--gray200);border-radius:var(--radius-xl);
+  padding:24px 20px;min-height:180px;display:flex;flex-direction:column;
+  cursor:pointer;transition:all .15s;box-shadow:var(--shadow);
+}
+.fc-card:active{transform:scale(.98)}
+.fc-topic-tag{display:inline-flex;align-items:center;gap:4px;background:var(--blue50);color:var(--blue600);border:1px solid var(--blue200);border-radius:99px;padding:3px 10px;font-size:11px;font-weight:700;margin-bottom:14px;width:fit-content}
+.fc-q{font-size:16px;font-weight:700;color:var(--gray800);line-height:1.65;flex:1}
+.fc-divider{height:1px;background:var(--gray200);margin:14px 0;display:none}
+.fc-a{font-size:14px;color:var(--green700);line-height:1.7;display:none}
+.fc-divider.show,.fc-a.show{display:block}
+.fc-hint{text-align:center;font-size:12px;color:var(--gray400);margin-top:14px}
+.fc-hint.hide{display:none}
+.fc-actions{display:flex;gap:8px}
+.fc-btn{
+  flex:1;background:var(--white);border:1.5px solid var(--gray300);border-radius:var(--radius);
+  padding:11px;font-family:var(--font);font-size:13px;font-weight:700;
+  color:var(--gray700);cursor:pointer;transition:all .15s;
+}
+.fc-btn:active{transform:scale(.97)}
+.fc-btn.next{background:var(--green600);border-color:var(--green600);color:white}
+.fc-progress{
+  background:var(--gray100);border-radius:99px;height:4px;overflow:hidden;margin-top:4px;
+}
+.fc-fill{background:var(--green500);height:4px;border-radius:99px;transition:width .3s}
+
+/* ════════════════════════════════
+   STATS SCREEN
+════════════════════════════════ */
+.stats-view{display:flex;flex-direction:column;gap:12px}
+.stat-hero{
+  background:var(--white);border:1.5px solid var(--gray200);border-radius:var(--radius-xl);
+  padding:20px;text-align:center;box-shadow:var(--shadow-sm);
+}
+.sh-avatar{font-size:48px;margin-bottom:10px}
+.sh-title{font-size:17px;font-weight:800;color:var(--gray800);margin-bottom:4px}
+.sh-sub{font-size:13px;color:var(--gray500)}
+.stats-grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.scard{background:var(--white);border:1.5px solid var(--gray200);border-radius:var(--radius);padding:14px;text-align:center;box-shadow:var(--shadow-sm)}
+.sc-val{font-size:24px;font-weight:900;display:block;margin-bottom:3px}
+.sc-lbl{font-size:12px;color:var(--gray500)}
+.sc-val.g{color:var(--green600)}.sc-val.b{color:var(--blue600)}.sc-val.a{color:var(--amber600)}.sc-val.r{color:var(--red500)}
+.topic-stats{background:var(--white);border:1.5px solid var(--gray200);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm)}
+.ts-header{padding:14px 16px;background:var(--gray50);border-bottom:1px solid var(--gray200);font-size:13px;font-weight:700;color:var(--gray600)}
+.ts-row{padding:12px 16px;border-bottom:1px solid var(--gray100);display:flex;align-items:center;gap:10px}
+.ts-row:last-child{border-bottom:none}
+.ts-icon{font-size:18px;width:30px;text-align:center;flex-shrink:0}
+.ts-info{flex:1}
+.ts-name{font-size:13px;font-weight:600;color:var(--gray700);margin-bottom:4px}
+.ts-bar-wrap{background:var(--gray200);border-radius:99px;height:4px;overflow:hidden}
+.ts-bar{background:var(--green500);height:4px;border-radius:99px;transition:width .5s}
+.ts-pct{font-size:12px;font-weight:700;color:var(--green600);flex-shrink:0}
+.danger-zone{background:var(--red50);border:1.5px solid var(--red200);border-radius:var(--radius);padding:14px;text-align:center;box-shadow:var(--shadow-sm)}
+.dz-btn{background:var(--white);border:1.5px solid var(--red400);color:var(--red600);padding:10px 20px;border-radius:var(--radius);font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;margin-top:8px;width:100%}
+.dz-btn:active{background:var(--red50)}
+
+/* ════════════════════════════════
+   BOTTOM NAV
+════════════════════════════════ */
+.bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;z-index:100;
+  background:var(--white);border-top:1px solid var(--gray200);
+  display:flex;padding-bottom:max(6px,var(--safe-bot));
+  box-shadow:0 -2px 10px rgba(0,0,0,0.05);
+}
+.bnav-btn{flex:1;background:none;border:none;cursor:pointer;padding:9px 4px 5px;display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--gray400);transition:color .15s;font-family:var(--font);min-height:52px}
+.bnav-btn.active{color:var(--green600)}
+.bnav-btn:active{opacity:.7}
+.bnav-icon{font-size:20px}
+.bnav-lbl{font-size:10px;font-weight:700}
+.bnav-dot{width:5px;height:5px;border-radius:50%;background:var(--red500);display:none;position:absolute;top:8px;right:calc(50% - 18px)}
+.bnav-dot.show{display:block}
+
+/* ════════════════════════════════
+   TOASTS & EFFECTS
+════════════════════════════════ */
+.toast{
+  position:fixed;top:calc(var(--safe-top) + 64px);left:50%;
+  transform:translateX(-50%) translateY(-16px);opacity:0;z-index:3000;
+  background:var(--gray800);color:white;border-radius:var(--radius);
+  padding:10px 18px;font-size:13px;font-weight:700;white-space:nowrap;
+  transition:all .3s cubic-bezier(.34,1.56,.64,1);pointer-events:none;
+  box-shadow:var(--shadow-md);
+}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.toast.good{background:var(--green600)}
+.toast.bad{background:var(--red500)}
+.toast.info{background:var(--blue600)}
+.particle{position:fixed;pointer-events:none;z-index:3000;border-radius:50%;animation:pf .9s forwards}
+@keyframes pf{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--tx),var(--ty)) scale(0);opacity:0}}
+
+/* INSTALL SHEET */
+.inst-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:4000;display:none}
+.inst-overlay.show{display:block}
+.inst-sheet{position:fixed;bottom:0;left:0;right:0;z-index:4001;background:var(--white);border-top:3px solid var(--green500);border-radius:24px 24px 0 0;padding:20px 20px calc(16px + var(--safe-bot));transform:translateY(100%);transition:transform .4s ease}
+.inst-sheet.show{transform:translateY(0)}
+.inst-handle{width:36px;height:4px;background:var(--gray300);border-radius:99px;margin:0 auto 18px}
+.inst-title{font-size:16px;font-weight:800;color:var(--gray800);text-align:center;margin-bottom:18px}
+.inst-step{display:flex;gap:12px;margin-bottom:14px;align-items:flex-start}
+.inst-num{width:26px;height:26px;border-radius:50%;background:var(--green600);color:white;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.inst-text{font-size:14px;color:var(--gray600);line-height:1.6}
+.inst-text strong{color:var(--gray800)}
+.inst-close{width:100%;background:var(--green600);border:none;color:white;padding:13px;border-radius:var(--radius);font-family:var(--font);font-size:14px;font-weight:800;cursor:pointer;margin-top:10px}
+.diff-bar{display:flex;gap:8px;margin-bottom:8px}
+.diff-btn{flex:1;background:var(--white);border:1.5px solid var(--gray200);border-radius:var(--radius);padding:10px 4px;font-family:var(--font);font-size:12px;font-weight:700;color:var(--gray600);cursor:pointer;transition:all .15s;text-align:center;box-shadow:var(--shadow-sm)}
+.diff-btn:active{transform:scale(.97)}
+.diff-btn.active{border-color:var(--green500);background:var(--green50);color:var(--green700)}
+#diff-med.active{border-color:var(--amber500);background:var(--amber50);color:var(--amber600)}
+#diff-hard.active{border-color:var(--red500);background:var(--red50);color:var(--red600)}
+.diff-info{font-size:12px;color:var(--gray400);text-align:center;margin-bottom:16px;font-weight:500}
+</style>
+</head>
+<body dir="rtl">
+
+<div class="toast" id="toast"></div>
+
+<!-- INSTALL -->
+<div class="inst-overlay" id="iov" onclick="closeInst()"></div>
+<div class="inst-sheet" id="ish">
+  <div class="inst-handle"></div>
+  <div class="inst-title">📱 התקן כאפליקציה</div>
+  <div class="inst-step"><div class="inst-num">1</div><div class="inst-text">פתח בדפדפן <strong>Safari</strong></div></div>
+  <div class="inst-step"><div class="inst-num">2</div><div class="inst-text">לחץ על כפתור <strong>שתף ⬆️</strong> בתחתית המסך</div></div>
+  <div class="inst-step"><div class="inst-num">3</div><div class="inst-text">בחר <strong>"הוסף למסך הבית"</strong></div></div>
+  <div class="inst-step"><div class="inst-num">4</div><div class="inst-text">לחץ <strong>"הוסף"</strong> — מוכן! עובד ללא אינטרנט ✅</div></div>
+  <button class="inst-close" onclick="closeInst()">הבנתי — בוא נלמד! 🏠</button>
+</div>
+
+<div id="app">
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="tb-logo-wrap">
+      <div class="tb-logo-icon">🏠</div>
+      <div>
+        <div class="tb-title">בחינת תיווך</div>
+        <div class="tb-sub">הכנה לרישיון מתווך</div>
+      </div>
+    </div>
+    <div class="tb-spacer"></div>
+    <div class="tb-badge" id="tb-badge">⭐ 0</div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-bar" id="prog-bar" style="display:none">
+    <div class="prog-info">
+      <span id="prog-txt">שאלה 1 מתוך 15</span>
+      <span id="prog-pct">0%</span>
+    </div>
+    <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+
+  <div id="scroll">
+    <!-- HOME -->
+    <div class="screen active" id="s-home">
+      <div class="hero-card">
+        <span class="hero-emoji">⚖️</span>
+        <div class="hero-title">הכנה לבחינת רישיון מתווך</div>
+        <div class="hero-sub">תרגל שאלות אמתיות על כל נושאי הבחינה — חוק, תקנות, חוזים, מיסוי ומקרקעין</div>
+        <div class="hero-stats">
+          <div class="hstat"><span class="hstat-val" id="hs-total">165</span><span class="hstat-lbl">שאלות</span></div>
+          <div class="hstat"><span class="hstat-val" id="hs-done">0</span><span class="hstat-lbl">תורגלו</span></div>
+          <div class="hstat"><span class="hstat-val" id="hs-pct">—</span><span class="hstat-lbl">הצלחה</span></div>
+        </div>
+        <button class="start-btn" onclick="startQuiz()">🚀 התחל בחינה עכשיו</button>
+      </div>
+
+      <div class="section-hdr">📚 בחר נושאים לתרגול</div>
+      <div class="topic-list" id="topic-list"></div>
+
+      <div class="section-hdr">📊 רמת קושי</div>
+      <div class="diff-bar" id="diff-bar">
+        <button class="diff-btn active" id="diff-all" onclick="setDiff('all')">🎯 הכל</button>
+        <button class="diff-btn" id="diff-easy" onclick="setDiff('קל')">🟢 קל</button>
+        <button class="diff-btn" id="diff-med" onclick="setDiff('בינוני')">🟡 בינוני</button>
+        <button class="diff-btn" id="diff-hard" onclick="setDiff('קשה')">🔴 קשה</button>
+      </div>
+      <div class="diff-info" id="diff-info">130 שאלות זמינות</div>
+
+      <div class="section-hdr">🎮 בחר מצב</div>
+      <div class="mode-grid">
+        <div class="mode-card active" id="mc-practice" onclick="setMode('practice')">
+          <div class="mc-icon">📖</div><div class="mc-name">תרגול</div><div class="mc-desc">עם הסברים מלאים</div>
+        </div>
+        <div class="mode-card" id="mc-exam" onclick="setMode('exam')">
+          <div class="mc-icon">⏱️</div><div class="mc-name">בחינה</div><div class="mc-desc">עם טיימר 90 שנ׳</div>
+        </div>
+        <div class="mode-card" id="mc-flash" onclick="showFlash()">
+          <div class="mc-icon">📇</div><div class="mc-name">פלאשקארדס</div><div class="mc-desc">חזרה מהירה</div>
+        </div>
+        <div class="mode-card" id="mc-wrong" onclick="startWrong()">
+          <div class="mc-icon">❌</div><div class="mc-name">שגיאות</div><div class="mc-desc">חזור על טעויות</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUIZ -->
+    <div class="screen" id="s-quiz">
+      <div class="q-header">
+        <div class="qh-badge" id="qh-num">1</div>
+        <div class="qh-info">
+          <div class="qh-topic" id="qh-topic">חוק המתווכים</div>
+          <div class="qh-diff" id="qh-diff">רמה: בינוני</div>
+        </div>
+        <div class="qh-timer hidden" id="qh-timer">90</div>
+      </div>
+      <div class="question-card">
+        <div class="q-label">❓ שאלה</div>
+        <div class="q-text" id="q-text">טוען...</div>
+      </div>
+      <div class="options" id="options"></div>
+      <div class="feedback" id="feedback">
+        <div class="fb-head">
+          <div class="fb-icon" id="fb-icon">✅</div>
+          <div class="fb-title" id="fb-title">תשובה נכונה!</div>
+        </div>
+        <div class="fb-text" id="fb-text"></div>
+        <button class="fb-more-btn" onclick="toggleDetail()" id="fb-more-btn">📖 פרטים נוספים</button>
+        <div class="fb-detail" id="fb-detail"></div>
+      </div>
+      <button class="next-btn" id="next-btn" onclick="nextQ()">השאלה הבאה ←</button>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="screen" id="s-results">
+      <div class="result-hero">
+        <span class="res-emoji" id="res-e">🏆</span>
+        <div class="res-title" id="res-t">מצוין!</div>
+        <div class="res-score" id="res-s">85%</div>
+        <div class="res-sub" id="res-sub">כל הכבוד!</div>
+        <div class="res-grid">
+          <div class="rcard g"><span class="rcard-val" id="rc-ok">0</span><span class="rcard-lbl">✅ נכון</span></div>
+          <div class="rcard r"><span class="rcard-val" id="rc-wr">0</span><span class="rcard-lbl">❌ שגוי</span></div>
+          <div class="rcard b"><span class="rcard-val" id="rc-tm">0</span><span class="rcard-lbl">⏱️ שניות</span></div>
+          <div class="rcard a"><span class="rcard-val" id="rc-pt">0</span><span class="rcard-lbl">⭐ נקודות</span></div>
+        </div>
+        <div class="res-actions">
+          <button class="rbtn primary" onclick="startQuiz()">🔄 בחינה חדשה</button>
+          <button class="rbtn secondary" onclick="startWrong()">❌ חזור על שגיאות</button>
+          <button class="rbtn secondary" onclick="showScr('home')">🏠 תפריט ראשי</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- FLASHCARDS -->
+    <div class="screen" id="s-flash">
+      <div class="fc-wrap">
+        <div class="fc-progress"><div class="fc-fill" id="fc-fill" style="width:0%"></div></div>
+        <div class="fc-ctr" id="fc-ctr">כרטיס 1 מתוך 20</div>
+        <div class="fc-card" onclick="flipCard()">
+          <div class="fc-topic-tag" id="fc-tag">📚 חוק המתווכים</div>
+          <div class="fc-q" id="fc-q">טוען...</div>
+          <div class="fc-divider" id="fc-div"></div>
+          <div class="fc-a" id="fc-a"></div>
+          <div class="fc-hint" id="fc-hint">👆 הקש לגלות תשובה</div>
+        </div>
+        <div class="fc-actions">
+          <button class="fc-btn" onclick="prevCard()">→ הקודם</button>
+          <button class="fc-btn next" onclick="nextCard()">← הבא</button>
+        </div>
+        <button class="rbtn secondary" onclick="showScr('home')" style="padding:11px;border-radius:var(--radius);font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;background:var(--white);border:1.5px solid var(--gray300);color:var(--gray700)">🏠 חזור לתפריט</button>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="screen" id="s-stats">
+      <div class="stats-view" id="stats-content"></div>
+    </div>
+  </div>
+
+  <nav class="bottom-nav">
+    <button class="bnav-btn active" id="bn-home" onclick="showScr('home')">
+      <span class="bnav-icon">🏠</span><span class="bnav-lbl">בית</span>
+    </button>
+    <button class="bnav-btn" id="bn-quiz" onclick="startQuiz()">
+      <span class="bnav-icon">📝</span><span class="bnav-lbl">בחינה</span>
+    </button>
+    <button class="bnav-btn" id="bn-flash" onclick="showFlash()">
+      <span class="bnav-icon">📇</span><span class="bnav-lbl">פלאשקארדס</span>
+    </button>
+    <button class="bnav-btn" id="bn-stats" onclick="showStats()">
+      <span class="bnav-icon">📊</span><span class="bnav-lbl">סטטיסטיקה</span>
+    </button>
+  </nav>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════
+   TOPICS
+══════════════════════════════════════════════ */
+const TOPICS=[
+  {id:'law',   name:'חוק המתווכים',         icon:'⚖️'},
+  {id:'ethics',name:'תקנות האתיקה',         icon:'🤝'},
+  {id:'contracts',name:'חוזי שכירות ומכר',  icon:'📋'},
+  {id:'tax',   name:'מיסוי נדל"ן',          icon:'💰'},
+  {id:'general',name:'דיני מקרקעין',        icon:'🏘️'},
+];
+
+/* ══════════════════════════════════════════════
+   QUESTIONS — 26+ PER TOPIC
+══════════════════════════════════════════════ */
+const Q=[
+
+/* ══ חוק המתווכים (26 שאלות) ══ */
+{id:1,t:'law',d:'קל',
+q:'באיזו שנה חוקק חוק המתווכים במקרקעין?',
+o:['2001','2012','1996','1985'],a:2,
+f:'חוק המתווכים חוקק בשנת 1996 ומסדיר את פעילות המתווכים במקרקעין בישראל.',
+det:'חוק המתווכים, התשנ"ו-1996, נחקק כדי לצמצם פערי כוחות ומידע בין ספקים לצרכנים בשוק הנדל"ן.'},
+
+{id:2,t:'law',d:'קל',
+q:'מה ההגדרה החוקית של "תיווך במקרקעין"?',
+o:['הפגשה בתמורה בין שני צדדים לשם התקשרות בעסקה','ייעוץ משפטי בנדל"ן','מכירת נכס בעמלה','רישום עסקה בטאבו'],a:0,
+f:'סעיף 1 לחוק מגדיר: "הפגשה בתמורה בין שני צדדים או יותר, לשם התקשרותם בעיסקה בזכות במקרקעין".',
+det:'שלושה יסודות: הפגשה, בתמורה, ועסקה בזכות במקרקעין. כל אחד הכרחי.'},
+
+{id:3,t:'law',d:'קל',
+q:'עיסוק בתיווך ללא רישיון — מה הסנקציה לפי החוק?',
+o:['קנס מנהלי של עד 10,000 ש"ח','ענישה פלילית','אזהרה בכתב מהרשם','פסילה מלהגיש בקשת רישיון ל-3 שנים'],a:1,
+f:'החוק קובע איסור שלצידו ענישה פלילית — לא רק קנס מנהלי.',
+det:'מדובר בעבירה פלילית ממש. הרציונל: הגנה על הצרכן מפני אנשים לא מוסמכים.'},
+
+{id:4,t:'law',d:'בינוני',
+q:'סעיף 8 לחוק — איזו חובה מוטלת על המתווך?',
+o:['לגבות עמלה קבועה לפי תעריף','לפרסם ברשומות על כל עסקה','לפעול בנאמנות, הגינות ולמסור מידע מהותי','להציג אישור פלילי ללקוח'],a:2,
+f:'סעיף 8: המתווך חייב לפעול בנאמנות, הגינות ובדרך מקובלת, למסור מידע מהותי ולפעול במיומנות.',
+det:'חובת ההגינות כוללת: נאמנות, גילוי מידע שיכול להשפיע על ההחלטה, ורמת מקצועיות סבירה.'},
+
+{id:5,t:'law',d:'בינוני',
+q:'סעיף 10 — מה הכלל לגבי עניין אישי של המתווך?',
+o:['מותר בכל מצב אם נאמר ללקוח','מותר רק כשעניין אישי קטן מ-10% מהעסקה','אסור — אלא אם גילה ללקוח וקיבל הסכמה בכתב','אסור בכל מקרה גם עם הסכמה'],a:2,
+f:'סעיף 10: לא יתווך בעסקה שיש לו בה עניין אישי, אלא אם גילה ללקוח וקיבל הסכמה בכתב.',
+det:'הסכמה בכתב היא חובה — לא מספיקה הסכמה בעל-פה ולא הסכמה שבשתיקה.'},
+
+{id:6,t:'law',d:'קשה',
+q:'סעיף 11 — מה בדיוק אוסר על מתווך?',
+o:['לגלות מידע על שוק הנדל"ן לקהל הרחב','לגלות ידיעות שהלקוח מסר — ללא הסכמתו','לחלוק מידע עם מתווכים אחרים בלשכה מקצועית','לפרסם מחירי עסקאות שנסגרו'],a:1,
+f:'סעיף 11: המתווך ועובדיו אינם רשאים לגלות ידיעות שהובאו לידיעתם ע"י הלקוח ללא הסכמתו.',
+det:'חובת הסודיות חלה גם אחרי סיום העסקה. הפרתה היא עילה לתלונה ולהליך משמעתי.'},
+
+{id:7,t:'law',d:'קשה',
+q:'מה בדיוק אוסר סעיף 12 לחוק — ומה מותר?',
+o:['אוסר לגבות עמלה מעל 2% — מותר כל שאר הפעולות','אוסר לייצג שני צדדים — מותר לערוך חוזה','אוסר לערוך מסמכים משפטיים ולייצג במשא ומתן — מותר ייעוץ כללי','אוסר לשתף מידע — מותר לנהל משא ומתן'],a:2,
+f:'סעיף 12 אוסר לערוך מסמכים משפטיים ולייצג לקוח במשא ומתן. ייעוץ כללי על השוק — מותר.',
+det:'גם אם המתווך הוא עורך דין, אסור לשלב תפקידים באותה עסקה — אלא אם עברו 3 שנים.'},
+
+{id:8,t:'law',d:'בינוני',
+q:'תיקון מס׳ 7 לחוק המתווכים — מה הוסיף?',
+o:['הגדיר לראשונה מהו "תיווך"','קבע סעיף 14כט המאפשר לשר לקבוע כללי אתיקה','הגדיל את קנסות האכיפה פי 3','חייב מתווכים לעבור ביטוח מקצועי'],a:1,
+f:'תיקון מס׳ 7 (2012) הוסיף סעיף 14כט המאפשר לשר המשפטים לקבוע כללי אתיקה מקצועית.',
+det:'הסעיף מאפשר זאת בהתייעצות עם הרשם והוועדה המייעצת ובאישור ועדת הפנים.'},
+
+{id:9,t:'law',d:'קשה',
+q:'מי מוסמך לקבוע כללי אתיקה מקצועית לפי סעיף 14כט — ובאיזה תהליך?',
+o:['רשם המתווכים, ללא צורך באישור','שר המשפטים, בהתייעצות עם הרשם ובאישור ועדת הפנים','ועדת הכנסת בלבד, ברוב של 61 חברים','שר האוצר, בהסכמת שר המשפטים'],a:1,
+f:'השר — בהתייעצות עם הרשם והוועדה המייעצת ובאישור ועדת הפנים והגנת הסביבה.',
+det:'ההליך כלל: מחקר משווה, סקר לציבור, שולחנות עגולים, בחינת תלונות ומחקר כלכלי.'},
+
+{id:10,t:'law',d:'קל',
+q:'מתי נחתמו תקנות האתיקה המקצועית למתווכים?',
+o:['29.7.2024','1.1.2025','4.9.2024','15.3.2023'],a:2,
+f:'השר חתם על תקנות האתיקה ב-4.9.2024, לאחר שאושרו בוועדת הפנים ב-29.7.2024.',
+det:'התקנות נכנסו לתוקף 6 חודשים לאחר פרסומן ברשומות.'},
+
+{id:11,t:'law',d:'קל',
+q:'לאן מגישים תלונה נגד מתווך שהפר את חובותיו?',
+o:['לבית משפט השלום','ללשכת עורכי הדין','לרשם המתווכים','למשטרת ישראל'],a:2,
+f:'תלונה מוגשת לרשם המתווכים שם תיבחן ע"י בודק מוסמך במשרד המשפטים.',
+det:'אם יוחלט לפתוח הליך — יועבר לוועדה המשמעתית שיכולה להטיל קנס, הקפאת רישיון ועוד.'},
+
+{id:12,t:'law',d:'בינוני',
+q:'אילו סנקציות יכולה הוועדה המשמעתית להטיל על מתווך?',
+o:['מאסר בלבד, ללא אפשרות קנס','קנס, הקפאת רישיון ותשלום הוצאות','רק אזהרה בכתב ועיכוב רישיון חדש','שלילת זכות לתווך מעל 5 שנים בלבד'],a:1,
+f:'הוועדה המשמעתית מוסמכת: קנס, הקפאת רישיון, תשלום הוצאות שנגרמו למדינה או למתלונן.',
+det:'הסנקציות יכולות להיות מצטברות — למשל קנס + הקפאת רישיון יחד.'},
+
+{id:13,t:'law',d:'בינוני',
+q:'מי בוחן את התלונה לפני פתיחת הליך משמעתי?',
+o:['שופט בית משפט שלום','רשם המתווכים בעצמו','בודק מוסמך במשרד המשפטים','עורך דין שמונה ע"י הלקוח'],a:2,
+f:'התלונה נבחנת ע"י בודק מוסמך במשרד המשפטים שמחליט אם יש מקום לפתוח הליך.',
+det:'לא כל תלונה מגיעה לוועדה. תלונות קנטרניות או חסרות בסיס ייסגרו בשלב בחינת הבודק.'},
+
+{id:14,t:'law',d:'קשה',
+q:'מה מהבאים מהווה עבירת משמעת תקפה נגד מתווך?',
+o:['גביית עמלה של 2.5% במקום 2%','איחור לפגישה עם לקוח ללא התרעה','הסתרת מידע מהותי מהלקוח','שימוש בניסוח שיווקי מוגזם במודעה'],a:2,
+f:'הסתרת מידע מהותי — הפרת חובת הגינות וזהירות (סעיף 8), ומהווה עבירת משמעת חמורה.',
+det:'עבירות משמעת: הפרת סודיות, אי-גילוי עניין אישי, רשלנות חמורה, הסתרת מידע, פעולות משפטיות אסורות.'},
+
+{id:15,t:'law',d:'בינוני',
+q:'האם "התנהגות בלתי הולמת" מהווה עבירת משמעת לפי חוק המתווכים?',
+o:['לא — רק הפרות ספציפיות שמפורטות בסעיפים','כן, לפי סעיף 14 לחוק','כן, אך רק כשנגרם נזק כספי מוכח ללקוח','לא — זהו עניין אזרחי בלבד'],a:1,
+f:'כן. סעיף 14 לחוק מגדיר "התנהגות בלתי הולמת" כאחת מעילות המשמעת של מתווך.',
+det:'עילות נוספות: השגת רישיון במצג שווא, הרשעה בעבירה רלוונטית, חוסר אחריות חמורה.'},
+
+{id:16,t:'law',d:'קל',
+q:'האם מתווך חייב לפעול במיומנות ובסבירות?',
+o:['לא, מספיק לפעול בתום לב בלבד','כן, לפי חובת הזהירות בסעיף 8','רק בעסקאות מעל 1.5 מיליון ש"ח','רק כשהלקוח ביקש זאת מפורשות'],a:1,
+f:'כן. סעיף 8 קובע שהמתווך חייב לפעול במיומנות ובסבירות — לא מספיק רצון טוב.',
+det:'מיומנות ובסבירות: לדעת את הנושאים, לברר מידע חיוני, לפעול כמו מתווך סביר.'},
+
+{id:17,t:'law',d:'קשה',
+q:'האם ניתן לעסוק בתיווך וגם להעסיק מתווך ללא רישיון?',
+o:['כן — ניתן להעסיק ללא רישיון תחת פיקוח','כן — אם העובד בתקופת הכשרה','שני המקרים אסורים ושניהם עבירות פליליות','רק ההעסקה אסורה, לא העיסוק העצמאי'],a:2,
+f:'החוק אוסר שני מקרים: עיסוק ללא רישיון והעסקת אדם ללא רישיון — שניהם עבירות פליליות.',
+det:'המחוקק ביקש להבטיח שכל מי שמבצע תיווך — שכיר או עצמאי — יחזיק רישיון תקף.'},
+
+{id:18,t:'law',d:'בינוני',
+q:'מה נדרש כדי שהרשעה בעבירה תוביל לאיבוד רישיון התיווך?',
+o:['כל הרשעה פלילית שהיא מספיקה אוטומטית','הרשעה בעבירה שמנסיבותיה אינו ראוי לעסוק בתיווך','רק הרשעה בעבירות כלכליות מעל 100,000 ש"ח','שתי הרשעות או יותר תוך 5 שנים'],a:1,
+f:'ההרשעה לבדה לא מספיקה — צריך שמנסיבות העבירה עולה שאינו ראוי לעסוק בתיווך.',
+det:'הוועדה בוחנת את טבע העבירה ואת הקשר בינה לבין עיסוק בתיווך.'},
+
+{id:19,t:'law',d:'קל',
+q:'חוק המתווכים שייך לאיזה תחום משפטי רחב יותר?',
+o:['דיני מסחר בינלאומי','דיני הגנת הצרכן','דיני עבודה','דיני ירושה ונדל"ן'],a:1,
+f:'חוק המתווכים מתקשר לדיני הגנת הצרכן — נועד לצמצם פערי כוחות ומידע בשוק.',
+det:'בשוק הנדל"ן יש פערי מידע משמעותיים. המתווך יודע הרבה יותר — החוק בא לאזן זאת.'},
+
+{id:20,t:'law',d:'בינוני',
+q:'"גילה חוסר אחריות במהלך עיסוקו" — האם זו עבירת משמעת?',
+o:['לא — רק אם נגרם נזק מוכח','כן, לפי סעיף 14 לחוק','לא — זהו תחום אזרחי בלבד','כן, אך רק לאחר שלוש הפרות'],a:1,
+f:'כן. סעיף 14 כולל במפורש "גילה חוסר אחריות או רשלנות חמורה" כעבירת משמעת.',
+det:'הכוונה לרשלנות מקצועית חמורה — לא כל טעות, אלא התנהלות מתחת לסטנדרט הסביר.'},
+
+{id:21,t:'law',d:'קשה',
+q:'מה המטרה המרכזית של חוק המתווכים לגבי פערי המידע?',
+o:['להקנות יתרון תחרותי למתווכים מורשים','לחייב מתווכים לפרסם את עמלותיהם ברשומות','לצמצם פערי מידע ולהגן על הצרכן מול בעל הידע','לרכז את שוק הנדל"ן בידי מתווכים מורשים'],a:2,
+f:'המטרה: לצמצם פערי מידע שקיימים בשוק הנדל"ן בין הספקים (מתווכים, מוכרים) לצרכן.',
+det:'הנחת היסוד: המתווך יודע יותר — והחוק מחייב אותו לשתף מידע ולפעול לטובת הלקוח.'},
+
+{id:22,t:'law',d:'בינוני',
+q:'האם ניתן לערער על החלטת הוועדה המשמעתית?',
+o:['לא — ההחלטה סופית ומחייבת','כן — ניתן לערער כמקובל בהליכים משפטיים','כן — אך רק בתוך 7 ימים ולשר בלבד','לא — אך ניתן לבקש עיון חוזר לאחר שנה'],a:1,
+f:'ניתן לערער על החלטות הוועדה המשמעתית, כמקובל בהליכים משפטיים.',
+det:'מערכת המשמעת של המתווכים מהווה מסגרת אכיפה מקצועית שיש בה זכויות הגנה לנאשם.'},
+
+{id:23,t:'law',d:'קל',
+q:'מתווך שרישיונו הוקפא — מה הוא חייב לעשות?',
+o:['להמשיך לעבוד עד מצות הערעור','להפסיק לעסוק בתיווך מיד','לשלם קנס ולהמשיך תחת פיקוח','להעביר את תיק עסקאותיו למתווך מחליף'],a:1,
+f:'מתווך שרישיונו הוקפא חייב להפסיק לעסוק בתיווך מיד. המשך עיסוק = עבירה פלילית נוספת.',
+det:'הקפאת רישיון היא לא פגיעה "על הנייר" — יש לה השלכות מיידיות ומעשיות.'},
+
+{id:24,t:'law',d:'בינוני',
+q:'האם לבודק המוסמך יש שיקול דעת אם לפתוח הליך על תלונה?',
+o:['לא — חייב לפתוח הליך על כל תלונה שהוגשה','כן — הוא בוחן ומחליט אם יש מקום לפתוח הליך','רק הרשם מחליט, לא הבודק','הלקוח עצמו מחליט אם לפתוח הליך'],a:1,
+f:'כן. הבודק המוסמך בוחן את המקרה ומחליט לפי שיקול דעתו אם יש מקום לפתוח הליך.',
+det:'לא כל תלונה מגיעה לוועדה. תלונות קנטרניות או חסרות בסיס ייסגרו בשלב הבדיקה.'},
+
+{id:25,t:'law',d:'קשה',
+q:'חובת שמירת מסמכי תיווך — מתי מתחילה לאחר כניסת תקנות האתיקה?',
+o:['רטרואקטיבית מ-1996','על עסקאות שנחתמו לאחר כניסת התקנות לתוקף','מיידית על כל מסמך ישן בתיק','רק על עסקאות מעל 1 מיליון ש"ח'],a:1,
+f:'חובת שמירת המסמכים חלה על עסקאות שנחתמו לאחר כניסת התקנות לתוקף.',
+det:'שמירה ל-7 שנים לפחות. בנוסף: חובה למסור ללקוח עותק מכל מסמך עליו חתם.'},
+
+{id:26,t:'law',d:'קל',
+q:'מהו "רשם המתווכים"?',
+o:['יו"ר לשכת המתווכים הפרטית','גוף ממשלתי במשרד המשפטים האחראי על רישוי ואכיפה','שופט מיוחד שמתמנה ע"י הכנסת','הגוף שקובע את שיעורי העמלה המותרים'],a:1,
+f:'רשם המתווכים הוא גוף ממשלתי במשרד המשפטים האחראי על מתן רישיונות ואכיפה.',
+det:'הרשם מקבל תלונות, מפעיל בודק מוסמך ומנהל את מאגר המתווכים המורשים.'},
+
+/* ══ תקנות האתיקה (26 שאלות) ══ */
+{id:27,t:'ethics',d:'קל',
+q:'האם מתווך חייב לציין פרטיו ומספר רישיונו בפרסומיו?',
+o:['רק בפרסום בעיתון יומי','כן — בכל פרסום מטעמו ללא יוצא מן הכלל','רק כשהנכס מעל 2 מיליון ש"ח','לא, זה אינו חובה אלא המלצה'],a:1,
+f:'חובה בכל פרסום: שם המתווך, היותו מתווך, ומספר הרישיון — ללא יוצא מן הכלל.',
+det:'נועד לאפשר קישור בין פרסום לבין המתווך — כדי לזהות ולאכוף פרסומים אסורים.'},
+
+{id:28,t:'ethics',d:'קל',
+q:'לקוח דרש לראות את רישיון התיווך — מה חובת המתווך?',
+o:['להמציא עותק דיגיטלי תוך 48 שעות','להפנות את הלקוח לאתר משרד המשפטים','להציג את הרישיון בתוקף מיד על פי הדרישה','ניתן לסרב אם הבקשה נראית קנטרנית'],a:2,
+f:'חובה על המתווך להציג רישיון תיווך בתוקף ללקוח — מיד ועל פי דרישה.',
+det:'סירוב להציג רישיון הוא סימן אזהרה חמור. הלקוח רשאי לסרב לחתום ולהגיש תלונה.'},
+
+{id:29,t:'ethics',d:'בינוני',
+q:'מה האיסור לגבי שימוש בפרטי לקוח שהתעניין בנכס מסוים?',
+o:['מותר לשתף פרטים עם מתווכים אחרים בלשכה','אסור לפנות אליו עם נכסים אחרים ללא הסכמה מפורשת','מותר לאחר תום שנה מסיום ההתקשרות','מותר כשמדובר בנכסים באותו אזור'],a:1,
+f:'אסור להשתמש בפרטי לקוח שהתעניין בנכס כדי להציע נכסים אחרים — אלא עם הסכמה מפורשת.',
+det:'הלקוח רשאי לסרב בכל עת — גם לאחר שהסכים. זכות הסירוב אינה ניתנת לוויתור.'},
+
+{id:30,t:'ethics',d:'קל',
+q:'האם מתווך שהוסמך כשמאי רשאי לשמות נכס שהוא מתווך?',
+o:['כן — זהו שירות מוסף לגיטימי','כן — עם הסכמת הלקוח בכתב','לא — אסור לשלב שמאות ותיווך לאותו נכס','כן — אם ידווח ללקוח על כפל-תפקיד'],a:2,
+f:'לא. מתווך-שמאי לא יערוך שומה לנכס שהוא מתווך — ניגוד עניינים מובנה.',
+det:'גם הפוך: שמאי שערך שומה לנכס לא יוכל לתווך בו במשך 3 שנים.'},
+
+{id:31,t:'ethics',d:'קשה',
+q:'מתווך שהוא גם עורך דין — מתי יכול לתווך בנכס שטיפל בו?',
+o:['מיד, כי זה תפקיד שונה','לאחר שנה מסיום הטיפול המשפטי','לאחר 3 שנים מסיום הטיפול המשפטי','לעולם לא, גם לאחר 10 שנים'],a:2,
+f:'מתווך-עורך דין לא יכול לתווך בנכס שבו טיפל משפטית — אלא אם עברו 3 שנים מהטיפול.',
+det:'אותה הגבלה חלה על שמאי: אם ערך שומה לנכס — לא יתווך בו במשך 3 שנים.'},
+
+{id:32,t:'ethics',d:'בינוני',
+q:'מה חובת המתווך כשנכס שפרסם נמכר?',
+o:['להוסיף "נמכר" על המודעה ולהשאיר 30 יום נוספים','לעדכן מיד שהנכס אינו מיועד עוד למכירה','לעדכן רק ברשומות האלקטרוניות הרשמיות','לא קיימת חובה מפורשת לעניין זה'],a:1,
+f:'חובה לעדכן בהקדם האפשרי שנכס שפרסם כבר אינו מיועד למכירה או השכרה.',
+det:'פרסום נכס שנמכר מטעה לקוחות ומבזבז את זמנם. זו הפרה של תקנות האתיקה.'},
+
+{id:33,t:'ethics',d:'בינוני',
+q:'מה חייב מתווך להסביר לפני שאדם הופך ללקוח שלו?',
+o:['נתוני שוק הנדל"ן באזור הנכס','מהות עסקת התיווך ובעיקר זכאות המתווך לשכר — בשפה פשוטה','את סכום העמלה המדויק שיגבה','היסטוריית עסקאות דומות בשכונה'],a:1,
+f:'על המתווך להסביר לפני ההתקשרות את מהות העסקה — בעיקר זכאות לשכר, בשפה פשוטה.',
+det:'הסבר ברור מונע סכסוכים. זכאות לשכר היא הנושא הכי שנוי במחלוקת.'},
+
+{id:34,t:'ethics',d:'קל',
+q:'האם מתווך חייב לציין שהוא מתווך בפנייה ראשונה ללקוח?',
+o:['לא — יכול להתחיל כ"יועץ" ולגלות בהמשך','כן — חייב לציין שהוא מתווך מהרגע הראשון','רק אם הלקוח שואל ישירות','רק לפני חתימת חוזה התיווך'],a:1,
+f:'כשמתווך פונה לאדם לראשונה לעניין אותו בנכס — חייב לציין שהוא מתווך מייד.',
+det:'הכלל נועד למנוע מצב שהלקוח מגלה בשלב מאוחר שמתנהל מול מתווך. שקיפות מהרגע הראשון.'},
+
+{id:35,t:'ethics',d:'קשה',
+q:'מה חייב מתווך שמייצג גם קונה וגם מוכר באותה עסקה?',
+o:['מספיק להודיע לשני הצדדים בעל-פה','לגלות לשניהם בכתב ולתעד בכתב את כל ההצעות שהועברו','לסגת מייצוג אחד הצדדים בהכרח','להורות לצדדים לפנות לעורכי דין משלהם'],a:1,
+f:'ייצוג כפול: חובה לקבל הסכמה בכתב מכולם + לתעד בכתב את כל ההצעות שהועברו.',
+det:'ייצוג כפול יוצר ניגוד עניינים. לא אסור לחלוטין — אך דורש שקיפות מוחלטת.'},
+
+{id:36,t:'ethics',d:'בינוני',
+q:'מה אסור לגבות מלקוח מעבר לדמי תיווך?',
+o:['דמי ניסיון ודמי שיווק','דמי קדימה, דמי רצינות, ותשלום לחידוש חוזה — כולם אסורים','רק דמי קדימה, אך דמי רצינות מותרים','כל תשלום מעבר לעמלה עד 500 ש"ח'],a:1,
+f:'תקנות האתיקה אוסרות מפורשות: דמי קדימה, דמי רצינות, ותשלום לחידוש חוזה.',
+det:'אלה פרקטיקות שהמחוקק החליט לאסור להגן על הצרכן. גביית כל אחד מהם — עבירה.'},
+
+{id:37,t:'ethics',d:'בינוני',
+q:'לקוח לא דבר עברית וחתם על בלעדיות. האם ההסכם תקף?',
+o:['כן — חתם ולכן מחויב','לא — המתווך חייב להסביר בשפה מובנת או להחתים בשפת הלקוח','תלוי בבית המשפט','כן — אחריות הלקוח להבין'],a:1,
+f:'לא. המתווך חייב להסביר ללקוח בשפה ברורה — או להחתים על מסמך בשפת הלקוח.',
+det:'חתימה ללא הבנה עלולה לפסול את ההסכם. חובת ההסבר היא של המתווך.'},
+
+{id:38,t:'ethics',d:'קשה',
+q:'מה חייב מתווך לגלות לגבי תשלומים מגורמים אחרים?',
+o:['אין חובת גילוי כזאת','לגלות רק תשלומים העולים על 1,000 ש"ח','לגלות לאדם לפני ההתקשרות כל תשלום או טובת הנאה מגורמים אחרים','לגלות רק אחרי חתימת חוזה התיווך'],a:2,
+f:'חובה לגלות לאדם לפני ההתקשרות כל תשלום שמקבל מגורמים אחרים בקשר לעסקה.',
+det:'מניעת ניגוד עניינים: עמלות מבנקים, מפתחים, חברות ביטוח — הלקוח חייב לדעת.'},
+
+{id:39,t:'ethics',d:'קל',
+q:'האם מתווך רשאי להציג נכס שיודע שאינו למכירה?',
+o:['כן — כדי להראות השוואות מחיר','כן — אם בעל הנכס מסכים להצגה בלבד','לא — אסור להציג נכס שאינו מיועד למכירה','כן — כשירות ייעוצי בלבד'],a:2,
+f:'אסור למתווך להציג נכס ביודעו שאינו מיועד למכירה או להשכרה.',
+det:'הצגת נכס שלא למכירה היא הטעיית לקוח — מראים דבר שלא ניתן לרכוש.'},
+
+{id:40,t:'ethics',d:'בינוני',
+q:'כשמכירה מתבצעת ע"י כונס נכסים — מתי חייב המתווך לגלות?',
+o:['רק אם הלקוח שואל','לאחר חתימת חוזה התיווך','לפני שהלקוח מתחייב כלפי המתווך','בתחילת הביקור בנכס'],a:2,
+f:'חובה לגלות ללקוח שהנכס נמכר ע"י כונס נכסים — לפני שמתחייב כלפי המתווך.',
+det:'מכירה ע"י כונס כרוכה בנהלים מיוחדים, זמנים שונים, ולעיתים סיכונים נוספים.'},
+
+{id:41,t:'ethics',d:'קשה',
+q:'מתווך שנותן שירות נוסף מעבר לתיווך — מה חייב לעשות?',
+o:['לגבות בסכום אחד ולהסביר בעל-פה','להפריד במפורש בין הסכומים לכל שירות','לא לגבות על שירות נוסף אם הוא חלק מהתהליך','לקבל אישור מהרשם לגביית שירות נוסף'],a:1,
+f:'חובה להפריד ולציין כמה עבור תיווך וכמה עבור כל שירות נוסף — בנפרד.',
+det:'ההפרדה מאפשרת ללקוח לדעת בדיוק על מה הוא משלם ולהשוות מחירים.'},
+
+{id:42,t:'ethics',d:'בינוני',
+q:'פרסום דירת מגורים בבעלות יחיד — מה נדרש מהמתווך?',
+o:['הסכמה בעל-פה של הבעלים מספיקה','לא צריך הסכמה אם הנכס מוזכר ברשומות','הסכמה בכתב או בדרך מתועדת אחרת','הסכמה מהרשם בלבד'],a:2,
+f:'לנכס שהוא דירת מגורים בבעלות יחיד — נדרשת הסכמה בכתב או בדרך מתועדת.',
+det:'לנכסים מסחריים — ניתן לקבל הסכמה בכל דרך. לדירות פרטיות — חובת תיעוד.'},
+
+{id:43,t:'ethics',d:'קל',
+q:'האם חובת ההסבר חלה לפני או אחרי שהאדם חתם?',
+o:['אחרי — כדי שיבין מה חתם','לפני — לפני הפיכתו ללקוח','בזמן החתימה בלבד','אין חובת הסבר, רק חובת שקיפות'],a:1,
+f:'ההסבר חייב להינתן לפני שהאדם הופך ללקוח — כדי שיחליט בצורה מושכלת.',
+det:'הסבר מוקדם מונע אי-הבנות וסכסוכים על זכאות לשכר לאחר מכן.'},
+
+{id:44,t:'ethics',d:'קשה',
+q:'מתווך שמוסר מידע תכנוני (כגון צפי לתמ"א) — מה חובתו?',
+o:['לציין שזו הערכה בלבד ולמסור בעל-פה','לציין מקור רשמי עליו הוא מסתמך','לוודא שהמידע אושר ע"י הוועדה המקומית','לא לאמת — זה תפקיד השמאי'],a:1,
+f:'כשמתווך מוסר מידע תכנוני — חייב לציין את המקור הרשמי עליו הוא מסתמך.',
+det:'מקורות רשמיים: תכניות מופקדות, בקשות להיתר, הכרזות לפי חוק הרשות לפיתוח עירוני.'},
+
+{id:45,t:'ethics',d:'בינוני',
+q:'האם מתווך רשאי להשתמש במידע שקיבל מלקוח למטרה אחרת?',
+o:['כן — המידע שייך לו לאחר 6 חודשים','לא — אסור שלא לצורך שעבורו נמסרה הידיעה, אלא בהסכמה','כן — לצרכי שיווק פנימי בלבד','לא — אך מותר לשתף עם מתווכים בלשכה'],a:1,
+f:'אסור להשתמש במידע שקיבל מהלקוח שלא לצורך שעבורו נמסרה הידיעה — אלא בהסכמה.',
+det:'הכלל: מידע שנמסר לצורך מסוים — ישמש רק לאותו צורך.'},
+
+{id:46,t:'ethics',d:'קשה',
+q:'מתווך שמייצג שני צדדים ומקבל הצעה מאחד מהם — מה חייב?',
+o:['להחליט לבדו אם ההצעה ראויה להעברה','לתעד ולהעביר כל הצעה בהתאם להנחיות הלקוח','להעביר רק הצעות מעל המחיר שסוכם מראש','לדון בהצעה עם שני הצדדים יחד'],a:1,
+f:'חייב לתעד ולהעביר כל הצעה שקיבל — בהתאם להנחיות הלקוח.',
+det:'הסתרת הצעה, גם ממניעים "טובים", היא הפרה חמורה. הלקוח מחליט — לא המתווך.'},
+
+{id:47,t:'ethics',d:'בינוני',
+q:'דירה שאינה ראויה למגורים — מה חובת המתווך שמציע אותה לשכירות?',
+o:['להוריד את המחיר בהתאם','לסרב לתווך את הנכס','לגלות ללקוח ולהפנות לחוק שכירות הוגנת','להמתין שהמשכיר יסדיר את הנכס'],a:2,
+f:'אם הדירה אינה ראויה למגורים — חובה לגלות ולהפנות ללקוח את הוראות חוק שכירות הוגנת.',
+det:'חוק שכירות הוגנת קובע תנאי מינימום לדירה. מתווך שמתווך דירה לא ראויה ללא גילוי — מפר.'},
+
+{id:48,t:'ethics',d:'קל',
+q:'האם מתווך יכול להתנות תיווך בשימוש בעורך דין שהוא ממליץ עליו?',
+o:['כן — אם מציין שזו המלצה בלבד','כן — אם עורך הדין מנוסה בנדל"ן','לא — אסור להתנות שירותי תיווך ברכישת שירות אחר','כן — אם עורך הדין מקבל עמלה מהמתווך'],a:2,
+f:'תקנות האתיקה אוסרות להתנות תיווך ברכישת שירות אחר — כולל עורך דין שמוכתב.',
+det:'אפילו אם אשתו של המתווך היא עורכת הדין — אסור. הדוגמה הזו הופיעה בחומר הלימוד!'},
+
+{id:49,t:'ethics',d:'בינוני',
+q:'כמה שנים חייב מתווך לשמור מסמכי עסקת תיווך?',
+o:['3 שנים','5 שנים','7 שנים לפחות','10 שנים'],a:2,
+f:'חובה לשמור עותקי מסמכי עסקת התיווך 7 שנים לפחות מיום חתימתם.',
+det:'גם חייב למסור ללקוח עותק מכל מסמך עליו חתם. לקוח שנדחה — יש לו זכות חוקית.'},
+
+{id:50,t:'ethics',d:'קשה',
+q:'איזה מידע מהבאים הוא "מידע מהותי" שמתווך חייב לגלות?',
+o:['צבע הקירות שהמוכר מעדיף','שם חברת הניהול של הבניין','מצב הרישום בטאבו, שטח, תשלומי חובה וליקויים מהותיים','מועד כניסת הדייר הקודם לנכס'],a:2,
+f:'מידע מהותי: מצב הרישום, שטח הנכס עם מקור רשמי, תשלומי חובה, וליקויים שנגלו בביקור.',
+det:'הכלל: אם הלקוח היה מחליט אחרת אם ידע את הנתון — הנתון הוא מהותי.'},
+
+{id:51,t:'ethics',d:'בינוני',
+q:'האם מתווך חייב להעביר שאלון פרטים לבעל הנכס?',
+o:['לא — מספיק שיחה בעל-פה עם בעל הנכס','כן — שאלון מוגדר שבעל הנכס ממלא ומועבר ללקוח המתעניין','רק בנכסים מסחריים מעל 5 מיליון','כן — אך רק בדירות חדשות מקבלן'],a:1,
+f:'כן. על המתווך להעביר שאלון לבעל הנכס למלא ולהעביר את תשובותיו ללקוח המתעניין.',
+det:'השאלון נועד להגביר גילוי נאות ולהבטיח שהקונה מקבל מידע שיטתי ומלא.'},
+
+{id:52,t:'ethics',d:'קל',
+q:'פרסום נכס מסחרי — האם נדרשת הסכמה מהבעלים?',
+o:['לא — נכסים מסחריים פומביים','כן — נדרשת הסכמה כלשהי, אך לא בהכרח בכתב','מספיק אישור ברשומות הציבוריות','לא — מספיק שהנכס רשום כמסחרי'],a:1,
+f:'גם לנכסים מסחריים — נדרשת הסכמת הבעלים. לדירות פרטיות — חובת כתב.',
+det:'לנכסים מסחריים ניתן לקבל הסכמה בכל דרך. לדירות פרטיות — חובת תיעוד בכתב.'},
+
+/* ══ חוזי שכירות ומכר (26 שאלות) ══ */
+{id:53,t:'contracts',d:'קל',
+q:'האם מתווך רשאי לערוך זיכרון דברים בין הצדדים?',
+o:['כן — זיכרון דברים הוא לא חוזה מחייב','כן — אם מציין שזה "לא מחייב"','לא — זיכרון דברים הוא מסמך משפטי אסור למתווך','כן — בעסקאות שכירות בלבד'],a:2,
+f:'לא. גם זיכרון דברים הוא מסמך משפטי. תקנות האתיקה אוסרות על המתווך לערוך אותו.',
+det:'זיכרון דברים יכול לחייב משפטית. עריכתו ע"י מי שאינו עורך דין — אסורה.'},
+
+{id:54,t:'contracts',d:'בינוני',
+q:'מה חובת המתווך עם הצעה שקיבל לגבי הנכס?',
+o:['לסנן ולהעביר רק הצעות שנראות רציניות','להעביר ללקוח כל הצעה שקיבל — בהתאם להנחיותיו','להחליט לבדו אם ההצעה מתאימה ללקוח','להשוות בין ההצעות ולהציג רק את הטובה ביותר'],a:1,
+f:'המתווך חייב להעביר ללקוח כל הצעה שקיבל לגבי הנכס — בהתאם להנחיות הלקוח.',
+det:'שקיפות מלאה היא חובה. הסתרת הצעה, גם ממניעים "טובים", היא הפרה חמורה.'},
+
+{id:55,t:'contracts',d:'בינוני',
+q:'לקוח ביקש להפסיק שיווק נכסו — מה על המתווך לעשות?',
+o:['להמשיך עד תום תקופת החוזה','להפסיק מיד — אלא אם קיים הסכם בלעדיות תקף','לבקש אישור בית המשפט','לתת ללקוח הודעה של 30 יום'],a:1,
+f:'חובה להפסיק מיד — אלא אם קיים הסכם בלעדיות תקף שמאפשר המשך.',
+det:'הסכם בלעדיות נותן למתווך זכות להמשיך שיווק — אך חייב להיות כתוב ומפורש.'},
+
+{id:56,t:'contracts',d:'קשה',
+q:'מתווך שרוצה להציע ללקוח נכסים נוספים אחרי העסקה — מה נדרש?',
+o:['ניתן לפנות ישירות, כי כבר קיימת היכרות','להודיע מראש שהפרטים ישמשו לכך ולאפשר סירוב','לשלוח הודעה ולהמתין 14 יום לתגובה','לבקש אישור הרשם לפני כל פנייה'],a:1,
+f:'לפני הצעת נכסים אחרים: חובה להודיע שהפרטים ישמשו לכך ולאפשר ללקוח לסרב.',
+det:'הלקוח רשאי לסרב בכל עת — אפילו אחרי שהסכים בתחילה. זכות הסירוב בלתי ניתנת לוויתור.'},
+
+{id:57,t:'contracts',d:'בינוני',
+q:'מה הכלל לגבי עריכת חוזה מכר על ידי מתווך?',
+o:['מותר אם הלקוח חתם על ויתור תביעות','מותר בחוזים "סטנדרטיים" עד 3 עמודים','אסור בכל מקרה — שמור לעורכי דין','מותר אם שני הצדדים מסכימים בכתב'],a:2,
+f:'מתווך אינו רשאי לערוך חוזה מכר — זה מסמך משפטי שמור לעורכי דין בלבד.',
+det:'גם "חוזה פשוט" שמתווך מנסח יכול ליצור חיוב משפטי ולגרום נזק. האיסור מוחלט.'},
+
+{id:58,t:'contracts',d:'קל',
+q:'האם מתווך רשאי לייצג לקוח במשא ומתן על תנאי חוזה?',
+o:['כן — בחוזי שכירות בלבד','כן — אם הלקוח חתם על ייפוי כוח','לא — ייצוג במשא ומתן משפטי אסור','כן — בסכומים מתחת למיליון ש"ח'],a:2,
+f:'לא. סעיף 12 אוסר על מתווך לייצג לקוח במשא ומתן לקראת חתימת חוזה.',
+det:'ניהול משא ומתן על תנאי חוזה הוא תפקיד עורך הדין — לא המתווך.'},
+
+{id:59,t:'contracts',d:'קשה',
+q:'מה "הפרדת שירותים" בתקנות האתיקה?',
+o:['איסור שמתווך ישמש גם כשמאי','כשמתווך נותן שירות נוסף — חייב לפרט כמה עבור כל שירות בנפרד','פרדה בין שירותי שכירות למכר','איסור לעסוק בתיווך ובבנייה יחד'],a:1,
+f:'כשמתווך נותן שירות נוסף — חייב לפרט בנפרד כמה עבור תיווך וכמה עבור כל שירות.',
+det:'ההפרדה מאפשרת ללקוח לדעת בדיוק על מה הוא משלם ולהחליט אם הוא רוצה כל שירות.'},
+
+{id:60,t:'contracts',d:'בינוני',
+q:'מתווך ייצג קונה ומוכר באותה עסקה ללא גילוי — האם תקין?',
+o:['כן — שכיח ומקובל','כן — כשהעמלה מוסכמת על שני הצדדים','לא — חובה לגלות לכל הצדדים בכתב ולקבל הסכמה','לא — אסור לייצג שני צדדים בכלל'],a:2,
+f:'לא. ייצוג כפול חייב לכלול: גילוי לכל הצדדים בכתב + הסכמה בכתב + תיעוד הצעות.',
+det:'ייצוג כפול לא אסור לחלוטין אבל דורש שקיפות מוחלטת. ללא גילוי — הפרה חמורה.'},
+
+{id:61,t:'contracts',d:'קל',
+q:'מה חייב מתווך לגלות לפני חתימת חוזה התיווך?',
+o:['מחיר הנכס בלבד','את כל נכסי בעל הנכס','מהות העסקה ובעיקר זכאות המתווך לשכרו','נסח הטאבו המעודכן'],a:2,
+f:'לפני חתימה — חייב להסביר את מהות עסקת התיווך ובעיקר את זכאות המתווך לשכרו.',
+det:'זה הנושא הכי שנוי במחלוקת: מתי מגיע שכר? ההסבר המוקדם חיוני.'},
+
+{id:62,t:'contracts',d:'קשה',
+q:'מה דין מסמך "הצעה להסכם" שמתווך ערך עבור הלקוח?',
+o:['תקף — כי עדיין לא חוזה','אסור — גם הצעה להסכם היא מסמך משפטי','מותר — כשלב ראשוני בלבד','תקף — אם שני הצדדים חתמו'],a:1,
+f:'תקנות האתיקה מבהירות: גם מסמך הצעה להסכם — אסור למתווך לערוך.',
+det:'גם "הצעה ראשונית" בכתב שמנסח המתווך היא מסמך משפטי שיכול לחייב.'},
+
+{id:63,t:'contracts',d:'בינוני',
+q:'מה מאפשר הסכם בלעדיות בין לקוח למתווך?',
+o:['גביית עמלה כפולה ממוכר וקונה','המשך שיווק הנכס גם אם הלקוח מבקש לעצור','ביצוע פעולות משפטיות בנכס','ייצוג בלעדי בבית המשפט'],a:1,
+f:'הסכם בלעדיות מאפשר למתווך להמשיך שיווק גם כשהלקוח מבקש להפסיק.',
+det:'הסכם הבלעדיות חייב להיות כתוב ומפורש. מתווך לא יכול לטעון לבלעדיות בעל-פה.'},
+
+{id:64,t:'contracts',d:'קל',
+q:'האם מתווך חייב למסור ללקוח עותק מהחוזה שחתם?',
+o:['לא — המסמך שמור אצל המתווך','כן — עותק מכל מסמך עליו חתם, מיד','רק בבקשה מפורשת שנשלחת בכתב','כן — תוך 30 יום מהחתימה'],a:1,
+f:'חובה למסור ללקוח עותק מכל מסמך עליו חתם — מיד ולא לאחר זמן.',
+det:'לקוח שאינו מקבל עותק — יש לו זכות לדרוש ולהגיש תלונה.'},
+
+{id:65,t:'contracts',d:'קשה',
+q:'מה בדיוק כולל האיסור על "פעולות משפטיות" שחל על מתווך?',
+o:['איסור לייעץ על שוק הנדל"ן','איסור לערוך מסמכים משפטיים, לסייע בעריכתם ולייצג במשא ומתן','איסור לפרסם נכסים ברשת','איסור לנהל מו"מ על מחיר'],a:1,
+f:'האיסור כולל: עריכת מסמכים משפטיים, סיוע בעריכתם, וייצוג לקוח במשא ומתן משפטי.',
+det:'המתווך לא יכול אפילו "לסייע" לעורך הדין בניסוח — גם זה אסור.'},
+
+{id:66,t:'contracts',d:'בינוני',
+q:'האם מתווך יכול לדרוש מלקוח להשתמש בעורך דין ספציפי?',
+o:['כן — אם עורך הדין מנוסה בעסקאות מסוג זה','לא — אסור להתנות תיווך ברכישת שירות אחר','כן — אם מציין שזו המלצה בלבד','כן — עם הפחתה של 0.5% מהעמלה'],a:1,
+f:'לא. אסור להתנות מתן שירותי תיווך ברכישת שירותים אחרים — כולל עורך דין ספציפי.',
+det:'כלל מרכזי: המתווך לא יכול לכפות על הלקוח שירות ספציפי כתנאי לתיווך.'},
+
+{id:67,t:'contracts',d:'קל',
+q:'מה חייב לכלול כל פרסום של נכס למכירה?',
+o:['מחיר הנכס, כתובת, ותמונות','שם המתווך, היותו מתווך ומספר רישיונו','אישור בעל הנכס ונסח הטאבו','שנת בנייה, מספר חדרים, קומה'],a:1,
+f:'בכל פרסום: שם המתווך, היותו מתווך, ומספר הרישיון — כדי לאפשר קישור לפרסום.',
+det:'ללא פרטים אלה — הפרסום אנונימי ואי אפשר לאכוף עליו. הפרטים הם בסיס האחריות.'},
+
+{id:68,t:'contracts',d:'קשה',
+q:'לקוח ביקש עותק החוזה לאחר 6 חודשים. המתווך טוען שנאבד. מה הדין?',
+o:['מותר — לאחר 6 חודשים ניתן לגרוס','לא — חובה לשמור 7 שנים ולמסור עותק על פי דרישה','מותר — אם הלקוח לא ביקש בזמן החתימה','לא — רק לחוזים מכר, לא שכירות'],a:1,
+f:'לא. חובת שמירה היא 7 שנים לפחות. טענה שנאבד אינה פוטרת — וחייב לספק עותק.',
+det:'הסיטואציה נזכרת ישירות בחומר הלימוד. 7 שנים הן מינימום — לא מקסימום.'},
+
+{id:69,t:'contracts',d:'בינוני',
+q:'מה תפקיד המתווך לאחר שמצא נכס מתאים ללקוח?',
+o:['תפקידו מסתיים — הלקוח ממשיך לבד','ממשיך ללוות ומוסר כל הצעה — בגבולות תפקידו','עובר לייצג את המוכר','מנהל את המשא ומתן על תנאי החוזה'],a:1,
+f:'המתווך ממשיך ללוות, מוסר הצעות — אך לא מנהל משא ומתן משפטי על תנאי חוזה.',
+det:'תפקיד המתווך: הפגשה ולווי. ניהול המשא ומתן על תנאי החוזה — תפקיד עורך הדין.'},
+
+{id:70,t:'contracts',d:'קל',
+q:'לקוח ביקש ממתווך מסמך הצעה להסכם. מה המתווך יעשה?',
+o:['יכין מסמך קצר ו"לא מחייב"','יכין ויציין שהלקוח אחראי לתוכן','לא יכין — יפנה לעורך דין','יכין אם ישנו עורך דין שיחתום לצד'],a:2,
+f:'לא. גם הצעה להסכם היא מסמך משפטי. המתווך יפנה לעורך דין — לא יכין בעצמו.',
+det:'כל מסמך שיכול לחייב את הצדדים — אסור למתווך לנסח. ה"הצעה" אינה יוצאת מן הכלל.'},
+
+{id:71,t:'contracts',d:'בינוני',
+q:'האם מתווך רשאי לערוך חוזה שכירות?',
+o:['כן — חוזה שכירות הוא פשוט יחסית','כן — אם הוא "חוזה סטנדרטי"','לא — חוזה שכירות הוא מסמך משפטי','כן — בשכירות לטווח קצר עד 3 חודשים'],a:2,
+f:'לא. חוזה שכירות הוא מסמך משפטי שאסור למתווך לערוך — ללא קשר לאורכו.',
+det:'גם "טופס סטנדרטי" שמתווך ממלא הוא עריכת מסמך משפטי — אסורה.'},
+
+{id:72,t:'contracts',d:'קשה',
+q:'מה הדין של "דמי קדימה" לפי תקנות האתיקה?',
+o:['מותרים עד 1,000 ש"ח','מותרים בהסכמת שני הצדדים בכתב','אסורים לחלוטין','מותרים בשכירות, אסורים במכר'],a:2,
+f:'דמי קדימה אסורים לחלוטין לפי תקנות האתיקה — כמו גם דמי רצינות ותשלום לחידוש חוזה.',
+det:'דמי קדימה = מתווך מרוויח גם ללא עבודה. הרגולציה אסרה זאת להגן על הצרכן.'},
+
+{id:73,t:'contracts',d:'בינוני',
+q:'מתי זכאי מתווך לשכרו?',
+o:['מיד עם חתימת חוזה התיווך','אחרי כל ביקור בנכס','אחרי הפגשה שהביאה לכריתת עסקה','אחרי שהצדדים חתמו על חוזה מכר'],a:2,
+f:'מתווך זכאי לשכרו לאחר הפגשה שהביאה לכריתת עסקה — לא לפני כן.',
+det:'חשוב: חייב להיות קשר סיבתי בין פעולת התיווך לבין כריתת העסקה. ללא קשר — לא זכאי.'},
+
+{id:74,t:'contracts',d:'קל',
+q:'האם חוזה תיווך חייב להיות בכתב?',
+o:['לא — מספיקה הסכמה בעל-פה','כן — הסכם תיווך חייב להיות בכתב','רק בעסקאות מכר מעל 2 מיליון','רק כשיש בלעדיות'],a:1,
+f:'כן. חוזה תיווך חייב להיות בכתב — תנאי לזכאות שכר המתווך.',
+det:'ללא חוזה בכתב — המתווך אינו זכאי לעמלה, גם אם פעל בפועל ושכנע קונה.'},
+
+{id:75,t:'contracts',d:'קשה',
+q:'גילוי עניין אישי בחוזה תיווך — מה הנדרש בדיוק?',
+o:['לציין בסוף החוזה בפסקה קטנה','לגלות ולקבל הסכמה בכתב לפני תחילת פעולת התיווך','לגלות לאחר סיום המשא ומתן','להסתלק מהעסקה ללא צורך בגילוי'],a:1,
+f:'חייב לגלות עניין אישי ולקבל הסכמה בכתב לפני כל פעולת תיווך.',
+det:'הסכמה שבשתיקה, הסכמה בעל-פה או הסכמה שניתנה אחרי העסקה — לא מספיקות.'},
+
+{id:76,t:'contracts',d:'בינוני',
+q:'האם מותר לגבות "תשלום לחידוש חוזה שכירות"?',
+o:['כן — עד חצי מהעמלה הרגילה','כן — אם הוסכם מראש','לא — אסור על פי תקנות האתיקה','כן — רק בשיכון ציבורי'],a:2,
+f:'תשלום לחידוש חוזה שכירות — אסור לפי תקנות האתיקה, כמו דמי קדימה.',
+det:'רשימת "תשלומים אסורים": דמי קדימה, דמי רצינות, תשלום לחידוש חוזה — כולם אסורים.'},
+
+{id:77,t:'contracts',d:'קל',
+q:'מה חייב מתווך לגלות לגבי תשלומים שמקבל מגורמים אחרים?',
+o:['רק תשלומים מעל 5,000 ש"ח','לא חייב — אלה עסקיו שלו','כל תשלום שמקבל מגורמים אחרים בקשר לעסקה — לפני ההתקשרות','רק תשלומים מהמוכר, לא מגורמים שלישיים'],a:2,
+f:'חייב לגלות לפני ההתקשרות כל תשלום שמקבל מגורמים אחרים בקשר לעסקה.',
+det:'מניעת ניגוד עניינים: עמלות מבנקים, מפתחים, חברות ביטוח — הלקוח חייב לדעת.'},
+
+{id:78,t:'contracts',d:'קשה',
+q:'לקוח שהסכים לשימוש בפרטיו — האם יכול לחזור בו?',
+o:['לא — הסכמה ניתנה ומחייבת','כן — רק בתוך 14 יום מההסכמה','כן — בכל עת, גם לאחר שהסכים','לא — אלא בבית משפט'],a:2,
+f:'הלקוח רשאי לסרב בכל עת לשימוש בפרטיו — אפילו לאחר שהסכים בהתחלה.',
+det:'זכות הסירוב היא בלתי ניתנת לוויתור. גם הסכמה שניתנה ניתנת לביטול בכל רגע.'},
+
+/* ══ מיסוי נדל"ן (26 שאלות) ══ */
+{id:79,t:'tax',d:'קל',
+q:'מהו מס שבח?',
+o:['מס שנתי על החזקת נכס','מס על רווח ממכירת נכס מקרקעין','מס שמשלם הקונה בעת הרכישה','מס על הכנסה משכר דירה'],a:1,
+f:'מס שבח הוא מס המוטל על הרווח (השבח) שנוצר ממכירת נכס מקרקעין.',
+det:'חישוב: שבח = מחיר מכירה - (מחיר קנייה + הוצאות מוכרות) × שיעור המס.'},
+
+{id:80,t:'tax',d:'קל',
+q:'מהו מס רכישה?',
+o:['מס על מכירת נכס','מס שנתי לרשות המקומית','מס שמשלם הקונה בעת רכישת נכס','מס על ירושת נכס מקרקעין'],a:2,
+f:'מס רכישה הוא מס שמשלם הרוכש בעת רכישת נכס, בהתאם לשווי ומדרגות מס.',
+det:'מדרגות שונות: דירה ראשונה (נמוכות), דירה שנייה ומעלה (גבוהות יותר).'},
+
+{id:81,t:'tax',d:'קל',
+q:'מי משלם מס שבח בעסקת מכר?',
+o:['הקונה','המתווך, מהעמלה שלו','המוכר','שניהם — חצי חצי'],a:2,
+f:'מס שבח מוטל על המוכר — הוא שצבר רווח מעליית ערך הנכס.',
+det:'כמתווך, חשוב לוודא שהמוכר מודע לחבות המס ולייעץ לו לפנות ליועץ מס.'},
+
+{id:82,t:'tax',d:'קל',
+q:'מה ההפרש בין מס שבח למס רכישה?',
+o:['שבח גבוה תמיד ממס רכישה','שבח על המוכר, רכישה על הקונה','שניהם על אותו צד בעסקה','שבח על קונה, רכישה על מוכר'],a:1,
+f:'מס שבח — מוטל על המוכר (מס על הרווח). מס רכישה — מוטל על הקונה (מס על הרכישה).',
+det:'הבחנה בסיסית: מוכר = שבח. קונה = רכישה. שניהם עשויים להיות חייבים בו-זמנית.'},
+
+{id:83,t:'tax',d:'בינוני',
+q:'מהי "דירת מגורים מזכה" לעניין פטור ממס שבח?',
+o:['כל דירה שנמכרת ע"י יחיד','דירה שהיא לא עסקית ועמדה בתנאי הפטור הקבועים בחוק','כל דירה שנמכרת פעם אחת בחיי הבעלים','דירה שנרכשה לפני שנת 2000'],a:1,
+f:'דירת מגורים מזכה היא דירה שבה גר הבעלים ועמדה בתנאי הפטור הקבועים בחוק.',
+det:'תנאי הפטור: לרוב מכירה אחת ל-18 חודשים, בעלות של 18 חודשים לפחות, ועוד.'},
+
+{id:84,t:'tax',d:'בינוני',
+q:'מה הכוונה ב"שבח" בחישוב מס השבח?',
+o:['שווי שוק הנכס ביום המכירה','הרווח — הפרש בין מחיר מכירה לקנייה בניכוי הוצאות מוכרות','עמלת המתווך ועלויות הרישום','ההפרש בין הנכס לממוצע השוק'],a:1,
+f:'שבח = מחיר מכירה - (מחיר קנייה + הוצאות מוכרות). המס מוטל על סכום זה.',
+det:'הוצאות מוכרות: שיפוצים, שכ"ט עורך דין, עמלות תיווך — כולן מפחיתות את השבח.'},
+
+{id:85,t:'tax',d:'קשה',
+q:'מהו שיעור מס השבח הרגיל לנכסים שנרכשו אחרי 2014?',
+o:['10%','15%','25%','35%'],a:2,
+f:'שיעור מס שבח הרגיל לנכסים שנרכשו לאחר 2014 הוא 25% על השבח הריאלי.',
+det:'לפני 2014 — שיעורים שונים ומחושבים לינארית. לאחר 2014 — 25% על החלק הריאלי.'},
+
+{id:86,t:'tax',d:'בינוני',
+q:'מתי קיים פטור ממס שבח על דירת מגורים?',
+o:['בכל מכירת דירה ראשונה, תמיד','במכירת דירה בירושה, תמיד','במכירת דירת מגורים מזכה שעמדה בתנאי הפטור','פעם ב-24 חודשים לכל מוכר'],a:2,
+f:'פטור ממס שבח קיים במכירת דירת מגורים מזכה שעמדה בתנאי הפטור — בעיקר פעם ב-18 חודשים.',
+det:'ישנם פטורים נוספים: ירושה, מכירה לקרוב. פרטים — אצל יועץ מס.'},
+
+{id:87,t:'tax',d:'קל',
+q:'מי משלם מס רכישה?',
+o:['המוכר, מהתמורה שקיבל','המתווך, מהעמלה שגבה','הקונה, בעת הרכישה','שניהם — חצי חצי'],a:2,
+f:'מס רכישה מוטל על הקונה — הוא המשלם בעת רכישת הנכס.',
+det:'שני המסים מוטלים במקביל: מוכר משלם שבח, קונה משלם רכישה.'},
+
+{id:88,t:'tax',d:'בינוני',
+q:'מה מאפיין מדרגות מס הרכישה לדירה ראשונה?',
+o:['שיעור אחיד של 8% על כל השווי','0% עד סכום מסוים, ולאחר מכן שיעורים עולים','0% תמיד לדירה ראשונה','שיעור של 25% כמו מס שבח'],a:1,
+f:'מדרגות מס רכישה לדירה ראשונה: 0% עד גבול מסוים, לאחר מכן שיעורים עולים.',
+det:'לדירה שנייה ומעלה — שיעורים גבוהים הרבה יותר (8% ויותר). המדרגות משתנות.'},
+
+{id:89,t:'tax',d:'קשה',
+q:'מה נחשב "הוצאות מוכרות" שמפחיתות את השבח?',
+o:['ריהוט וציוד שנרכש לנכס','שיפוצים, שכ"ט עורך דין, עמלות תיווך, היטל השבחה ועוד','רק עלות הקנייה המקורית','הוצאות מחייה שהמוכר הוציא בתקופת הבעלות'],a:1,
+f:'הוצאות מוכרות: שיפוצים, שכ"ט עורך דין, עמלות תיווך, היטל השבחה ועוד.',
+det:'חשוב לשמור קבלות. יועץ מס נכון יכול לחסוך כסף רב ע"י מיקסום ההוצאות.'},
+
+{id:90,t:'tax',d:'בינוני',
+q:'מה ההבדל בין "מס שבח" ל"מס רווח הון"?',
+o:['אין הבדל — זה שם אחר לאותו מס','מס שבח הוא סוג ספציפי של מס רווח הון החל על מקרקעין','מס רווח הון גבוה ממס שבח תמיד','מס רווח הון חל רק על תאגידים'],a:1,
+f:'מס שבח הוא למעשה מס רווח הון הייחודי למקרקעין, עם כללים ופטורים ספציפיים.',
+det:'לנדל"ן יש כללים מיוחדים שלא חלים על מכשירים פיננסיים אחרים.'},
+
+{id:91,t:'tax',d:'קל',
+q:'כמתווך — מה תפקידך לגבי מיסוי הלקוח?',
+o:['לחשב את המס עבורו','לגבות את המס ולהעבירו לרשות','לדעת מיהו המשלם ולהפנות ליועץ מס','להחריג נכסים עם חבות מס גבוהה'],a:2,
+f:'כמתווך: לדעת מיהו המשלם ולהפנות ליועץ מס — לא לחשב בעצמך.',
+det:'חישוב מס הוא תחום יועץ מס. המתווך מספק מודעות — לא חישוב מפורט.'},
+
+{id:92,t:'tax',d:'קשה',
+q:'מה "ליניאריות מוטבת" בחישוב מס שבח?',
+o:['חישוב לפי אורך תקופת הבעלות בלבד','חישוב שמפחית מס על חלק השבח שנצבר לפני 2014','חישוב לפי מדד המחירים לצרכן בלבד','חישוב לינארי פשוט לפי שנות בעלות'],a:1,
+f:'ליניאריות מוטבת מאפשרת שיעור מס נמוך (25%) על חלק השבח שנצבר מ-1.1.2014.',
+det:'חלק שנצבר לפני 2014 — שיעורים נמוכים יותר. שני חלקי השבח ממוסים בשיעורים שונים.'},
+
+{id:93,t:'tax',d:'בינוני',
+q:'כמה פעמים ניתן לקבל פטור ממס שבח על אותה דירה?',
+o:['פעם אחת בחיים, ללא הגבלת זמן','פעם אחת בלבד לאותה דירה','פעם ב-18 חודשים — ניתן חזרה ושוב','פעמיים — אחת בכל עשור'],a:2,
+f:'הפטור ניתן לאותה דירה פעם ב-18 חודשים — "השעון" מתאפס ויכול לחול שוב.',
+det:'המוכר צריך להמתין 18 חודשים מהמכירה הקודמת לפטור הבא. לא "פעם בחיים".'},
+
+{id:94,t:'tax',d:'קשה',
+q:'מהו "מס מכירה" — ומה מעמדו היום?',
+o:['שם אחר למס שבח — קיים וחי','מס נוסף על מוכרים שבוטל בשנת 2008','מס על קבלנים שעדיין בתוקף','מס ייעודי לנדל"ן יוקרה, קיים מאז 2014'],a:1,
+f:'מס מכירה היה מס נוסף שחל על מוכרים — בוטל בשנת 2008 ואינו קיים עוד.',
+det:'לאחר ביטולו, עיקר הנטל על המוכר הוא מס שבח בלבד. לתכנון מס — פניה ליועץ.'},
+
+{id:95,t:'tax',d:'בינוני',
+q:'האם מתווך רשאי לחשב עבור לקוחו את מס השבח?',
+o:['כן — זה חלק מהשירות המקצועי','כן — אם הוא גם יועץ מס','לא — חישוב מס שמור לגורמים מוסמכים','לא — רק שמאי מורשה יכול'],a:2,
+f:'לא. חישוב מס הוא תחום מוסמך ייחודי. המתווך מפנה — לא מחשב.',
+det:'מתווך שמחשב מס ומוסר תחזיות שגויות עלול לגרום נזק ולהתחייב בפיצוי.'},
+
+{id:96,t:'tax',d:'קל',
+q:'מהו "היטל השבחה"?',
+o:['שם נוסף למס שבח','תשלום לרשות המקומית על עלייה בשווי קרקע עקב שינוי תכנוני','ארנונה מוגברת לנכסים יקרים','תשלום על שיפוץ ללא היתר'],a:1,
+f:'היטל השבחה הוא תשלום לרשות המקומית על עלייה בשווי קרקע שנגרמה משינוי תכנוני.',
+det:'למשל: עלייה בזכויות בנייה מתוכנית חדשה — הבעלים ישלמו היטל על הרווח שנוצר.'},
+
+{id:97,t:'tax',d:'קשה',
+q:'מה קורה למס שבח כשנכס עבר בירושה?',
+o:['מס שבח כפול','פטור גורף ללא תנאים','פטור מיוחד לירושה בתנאים ספציפיים שנקבעו בחוק','אין מס כלל על ירושת מקרקעין'],a:2,
+f:'ירושת נכס מקרקעין זוכה לפטור מיוחד ממס שבח — בתנאים ספציפיים שנקבעו.',
+det:'הפרטים מורכבים. יש לבדוק כל מקרה עם יועץ מס. הכלל: ירושה — פטור בתנאים.'},
+
+{id:98,t:'tax',d:'בינוני',
+q:'מה "שבח ריאלי" לעומת "שבח אינפלציוני"?',
+o:['ריאלי = רווח לפני אינפלציה; אינפלציוני = לא קיים בישראל','ריאלי = הרווח האמיתי מעל האינפלציה; אינפלציוני = מרכיב האינפלציה בלבד','שניהם חייבים במס שבח במלואם','ריאלי = בנכסי יוקרה; אינפלציוני = בדירות רגילות'],a:1,
+f:'שבח ריאלי = הרווח האמיתי מעל האינפלציה. שבח אינפלציוני = מרכיב האינפלציה בלבד.',
+det:'כיום רק השבח הריאלי חייב במס. מרכיב האינפלציה פטור בדרך כלל.'},
+
+{id:99,t:'tax',d:'קל',
+q:'מה חובת המתווך לגבי ייעוץ מס ללקוח?',
+o:['לייעץ בעצמו על בסיס ניסיונו','להפנות ליועץ מס מוסמך ולא לייעץ בעצמו','להפנות לשמאי מקרקעין','לא להתייחס לנושא כלל'],a:1,
+f:'המתווך מפנה ליועץ מס מוסמך — לא מייעץ בעצמו.',
+det:'תחום המיסוי מורכב ומשתנה. ייעוץ שגוי עלול לגרום נזק. הפניה מקצועית — הדרך הנכונה.'},
+
+{id:100,t:'tax',d:'קשה',
+q:'מהו "מס יסף" ואיך הוא קשור לנדל"ן?',
+o:['מס נוסף על נכסים מעל 5 מיליון','מס נוסף של 3% על הכנסה גבוהה, כולל הכנסות מנדל"ן','מס ייחודי לדירות יוקרה מעל 2 חדרי שינה','מס על מוכרים שמוכרים תוך שנה מהרכישה'],a:1,
+f:'מס יסף של 3% חל על יחידים בעלי הכנסה מעל הסף שנקבע — כולל הכנסות מנדל"ן.',
+det:'מס יסף מתווסף למס השבח הרגיל. פרטי הסף ועדכוניו — מחייבים בדיקה עם יועץ מס.'},
+
+{id:101,t:'tax',d:'בינוני',
+q:'האם עמלת תיווך מפחיתה את מס השבח של המוכר?',
+o:['לא — אין קשר בין עמלה למס','כן — עמלת תיווך היא הוצאה מוכרת שמפחיתה את השבח','כן — אך מוגבלת ל-2% מהשווי','לא — רק בדירת מגורים מזכה'],a:1,
+f:'כן. עמלת תיווך ששילם המוכר מהווה הוצאה מוכרת שמפחיתה את גובה השבח החייב.',
+det:'לכן חשוב שהמוכר ישמור קבלה על עמלת התיווך — היא תסייע בהפחתת המס.'},
+
+{id:102,t:'tax',d:'קשה',
+q:'מהו לוח הזמנים לדיווח לרשות המסים בעסקת מקרקעין?',
+o:['תוך שנה מביצוע העסקה','תוך 50 יום מיום העסקה','תוך 30 יום בלבד','תוך 90 יום מיום הרישום בטאבו'],a:1,
+f:'בעסקת מקרקעין חובה לדווח לרשות המסים בתוך 50 יום מיום העסקה.',
+det:'הדיווח נעשה ע"י עורך הדין בדרך כלל. עיכוב בדיווח גורר קנסות.'},
+
+{id:103,t:'tax',d:'בינוני',
+q:'מה "מרכיב האינפלציה" בחישוב שבח?',
+o:['תוספת מס של 3% בגין האינפלציה','החלק בשבח שנוצר מעליית מחירים כללית — לרוב פטור ממס','מדד שמגדיל את המס ב-1.5% לשנה','מרכיב שממוסה ב-10% בלבד'],a:1,
+f:'מרכיב האינפלציה הוא החלק שנוצר מעליית מחירים כללית — לרוב פטור ממס.',
+det:'המטרה: לא למסות שמירת ערך בלבד, אלא רק רווח אמיתי מעל האינפלציה.'},
+
+{id:104,t:'tax',d:'קל',
+q:'מתי משלמים דמי היתר לרמ"י?',
+o:['בכל עסקת מכר של נכס מחכירה','כשמחכיר מבקש לנצל זכויות בנייה שאינן בחוזה המקורי','בכל שיפוץ של נכס בחכירה','בכל העברת זכויות בנכס מחכירה'],a:1,
+f:'דמי היתר משולמים לרמ"י כשמחכיר מבקש לנצל זכויות בנייה שאינן כלולות בחוזה המקורי.',
+det:'רלוונטי לנכסים בחכירה מרמ"י. חשוב שהמתווך יהיה מודע לעלות זו.'},
+
+/* ══ דיני מקרקעין כלליים (26 שאלות) ══ */
+{id:105,t:'general',d:'קל',
+q:'מה "טאבו" בעגה הישראלית?',
+o:['חוזה מכר בכתב ידיים','לשכת רישום המקרקעין — הגוף שבו רשומות הזכויות','אישור ממשרד הפנים להעברת בעלות','מסמך העברת בעלות על נכס'],a:1,
+f:'"טאבו" הוא השם העממי ללשכת רישום המקרקעין — הגוף הממשלתי שבו רשומות זכויות על נכסים.',
+det:'בטאבו רשומים: בעלים, משכנתאות, הערות אזהרה, זיקות הנאה ועוד. בדיקת טאבו חיונית.'},
+
+{id:106,t:'general',d:'קל',
+q:'מה חייב מתווך לגלות לגבי רישום הנכס?',
+o:['לא חייב לבדוק — זה תפקיד הנוטריון','רק אם הלקוח מבקש במפורש','בעלי הזכויות ורישום הנכס — מידע מהותי שחייב לבדוק','רק את שם בעל הנכס הנוכחי'],a:2,
+f:'מידע מהותי כולל: בעלי הזכויות ומצב הרישום בטאבו. חייב לבדוק ולמסור מידע מדויק.',
+det:'בדיקת טאבו מגלה: מי הבעלים, האם יש משכנתא, הערות אזהרה, שעבודים ועוד.'},
+
+{id:107,t:'general',d:'בינוני',
+q:'מהי "הערת אזהרה" על נכס בטאבו?',
+o:['ציון שהנכס ישן ודורש שיפוץ','קנס ממשרד הבינוי על בנייה לא חוקית','רישום המצביע על זכות עתידית — רכישה בתהליך, הסכם עתידי','אזהרה מהרשות המקומית על חוב ארנונה'],a:2,
+f:'הערת אזהרה היא רישום בטאבו המצביע על זכות עתידית — רכישה בתהליך, הסכם עתידי.',
+det:'"מונעת" רישום עסקה נוגדת. קונה חכם ירשום הערת אזהרה מיד אחרי חתימת החוזה.'},
+
+{id:108,t:'general',d:'קל',
+q:'מהי "משכנתא" על נכס?',
+o:['חובת תשלום ארנונה חודשית','שעבוד הנכס לטובת נותן ההלוואה (בדרך כלל הבנק)','הסכם ניהול עם חברת ניהול','זכות קדימה בקנייה לבנק'],a:1,
+f:'משכנתא היא שעבוד הנכס לטובת הבנק כנגד הלוואה לרכישתו. בעת מכירה — חייבים לפרוע.',
+det:'קונה חייב לבדוק שהמשכנתא תסולק לפני או בעת העסקה.'},
+
+{id:109,t:'general',d:'בינוני',
+q:'מה "שכר דירה צמוד מדד"?',
+o:['שכר דירה הנמדד לפי גודל הנכס בלבד','שכר דירה בקרבת אוניברסיטה מרכזית','שכר דירה שמשתנה בהתאם למדד המחירים לצרכן','שכר דירה שנקבע ע"י הרשות המקומית'],a:2,
+f:'שכר דירה צמוד מדד עולה עם הזמן בהתאם למדד המחירים לצרכן (CPI).',
+det:'חשוב לשוכרים: שכר הדירה יעלה. המתווך חייב להסביר את המנגנון ללקוח.'},
+
+{id:110,t:'general',d:'קשה',
+q:'מה "חוזה שכירות מוגן" ולמי הוא רלוונטי?',
+o:['חוזה עם ערבות בנקאית ממשלתית','חוק שמגן על שוכרים ותיקים שנכנסו לפני 1968 — מגביל פינוי והעלאת שכר','חוזה סטנדרטי שמשרד המשפטים אישר','חוזה שמוגן מפני הפרות חד-צדדיות'],a:1,
+f:'שכירות מוגנת מגנה על שוכרים שנכנסו לפני 1968 — חוק מיוחד שמגביל פינוי והעלאת שכר.',
+det:'נכסים עם דייר מוגן מוכרים בהנחה משמעותית. חשוב לזהות דיירים מוגנים לפני עסקה.'},
+
+{id:111,t:'general',d:'בינוני',
+q:'מהי "זיקת הנאה" על נכס מקרקעין?',
+o:['הנחה בארנונה לנכסים בעלי נגישות מוגבלת','זכות להשתמש בנכס של אחר לצורך ספציפי (מעבר, צינור וכד׳)','זכות קדימה בקנייה לשכנים','הקלה בתשלומי ועד בית'],a:1,
+f:'זיקת הנאה היא זכות להשתמש בנכס של אחר לצורך מסוים — מעבר, צינור, חשמל וכד׳.',
+det:'זיקת הנאה רשומה בטאבו ועוברת עם הנכס. קונה חייב לדעת אם יש זיקות על הנכס.'},
+
+{id:112,t:'general',d:'קל',
+q:'מהי "ארנונה"?',
+o:['מס ממשלתי על מכירת נכס','מס מוניציפלי שמשלמים מחזיקי נכסים לרשות המקומית','דמי ניהול לוועד הבית','תשלום חודשי לחברת החשמל'],a:1,
+f:'ארנונה היא מס מוניציפלי שמשלמים מחזיקי נכסים (בעלים או שוכרים) לרשות המקומית.',
+det:'תשלומי חובה כולל ארנונה — הם מידע מהותי שמתווך חייב לכלול בגילוי לקוח.'},
+
+{id:113,t:'general',d:'בינוני',
+q:'מהו "פנקס הבתים המשותפים"?',
+o:['רשימת ועדי הבתים ברשות המקומית','מרשם מקרקעין לבתים משותפים — רשומות הדירות והרכוש המשותף','אוסף חוזי שכירות של דיירים בבניין','תקנון שמנהלים אנשי ועד הבית'],a:1,
+f:'פנקס הבתים המשותפים הוא חלק מרשם המקרקעין שבו רשום הבית המשותף, הדירות והרכוש המשותף.',
+det:'כל בית משותף חייב להיות רשום בפנקס. כולל: גוש, חלקה, דירות, תקנון וחלקים ברכוש המשותף.'},
+
+{id:114,t:'general',d:'קשה',
+q:'מה ההבדל בין "רישיון מקרקעין" ל"בעלות" ל"חכירה"?',
+o:['כולם שמות שונים לאותו הדבר','רישיון = הרשאה בלי זכות קניינית; חכירה = זכות לתקופה; בעלות = זכות מלאה','רישיון = קצר-מועד; חכירה = קבוע; בעלות = ממשלתי','רישיון = פרטי; חכירה = ממשלתי; בעלות = עירוני'],a:1,
+f:'רישיון = הרשאה בלי זכות קניינית (ניתן לביטול). חכירה = זכות לתקופה. בעלות = מלאה ורשומה.',
+det:'מחזיק ברישיון — מצבו הכי חלש. בעל חכירה — יש לו הגנה. בעל נכס — הזכות המלאה.'},
+
+{id:115,t:'general',d:'בינוני',
+q:'מהו "תקנון בית משותף"?',
+o:['חוזה שכירות ממשלתי אחיד','חוזה בין הקבלן לרוכשי הדירות','כללי ניהול, זכויות וחובות של כל דייר בבית המשותף','תקנות הוועד המקומי לגבי בתים'],a:2,
+f:'תקנון בית משותף קובע את כללי הניהול, הזכויות והחובות של כל דייר בבית המשותף.',
+det:'תקנון יכול להגביל שימושים (למשל: אסור לגדר מרפסת). כל קונה חייב לבדוק לפני הקנייה.'},
+
+{id:116,t:'general',d:'קל',
+q:'מהו "רכוש משותף" בבית משותף?',
+o:['כל הדירות בבניין גם יחד','שטחים שאינם שייכים לדירה ספציפית: גג, מדרגות, חצר, לובי','החנייה המשותפת בלבד','שטח הגג בלבד'],a:1,
+f:'רכוש משותף הוא חלקי הבניין שאינם שייכים לדירה ספציפית: גג, מדרגות, חצר, עמודים.',
+det:'כל בעל דירה מחזיק חלק ברכוש המשותף. שינוי ברכוש משותף דורש הסכמת כל הבעלים.'},
+
+{id:117,t:'general',d:'קשה',
+q:'מה "חכירה" מרשות מקרקעי ישראל?',
+o:['בעלות מלאה שניתנת מהמדינה','הלוואה ממשלתית לרכישת נכס','זכות שימוש לתקופה ארוכה (49/98 שנה) ללא בעלות — רמ"י נשארת הבעלים','חוזה שכירות מסובסד לזכאים'],a:2,
+f:'חכירה מרמ"י היא זכות שימוש ל-49 או 98 שנה — ללא בעלות. המדינה נשארת הבעלים.',
+det:'רוב הקרקע בישראל בבעלות המדינה. מרבית "עסקאות המכר" הן למעשה עסקאות חכירה.'},
+
+{id:118,t:'general',d:'בינוני',
+q:'מהו "הסכם מכר" בנדל"ן?',
+o:['הסכם שכירות לטווח ארוך','הסכם המעביר בעלות על נכס מהמוכר לקונה בתמורה','הסכם ניהול נכס','הסכם בין קבלן לרשות המקומית'],a:1,
+f:'הסכם מכר הוא חוזה משפטי שמעביר בעלות על נכס מהמוכר לקונה — בתמורה למחיר מוסכם.',
+det:'הסכם מכר נערך ע"י עורך דין. מתווך לא רשאי לנסח אותו. חתימה ללא ייעוץ — מסוכנת.'},
+
+{id:119,t:'general',d:'קל',
+q:'מה תפקיד "ועד הבית"?',
+o:['גוף שמנהל את מינהל מקרקעי ישראל','ועדת תכנון מחוזית','גוף שמנהל את הבית המשותף — תחזוקה, ניקיון, גביית ועד','רשות המיסוי לנכסי מגורים'],a:2,
+f:'ועד בית הוא הגוף המנהל את הנכסים המשותפים — תחזוקה, ניקיון, גביית ועד ועוד.',
+det:'דמי הועד החודשיים הם "תשלומי חובה" — מידע מהותי שמתווך חייב לגלות.'},
+
+{id:120,t:'general',d:'קשה',
+q:'מהי "זכות קדימה" בנדל"ן?',
+o:['זכות לנצל את הנכס לפני תאריך מסוים','זכות לרכוש נכס ראשון לפני שנמכר לאחר','זכות להנחה בעסקה הבאה','זכות לחזות בנכס לפני כל קונה אחר'],a:1,
+f:'זכות קדימה היא זכות חוזית לרכוש נכס לפני כל קונה אחר — אם הבעלים מחליט למכור.',
+det:'לשותפים בנכס יש לרוב זכות קדימה על חלק של שותף אחר. חשוב לבדוק לפני עסקה.'},
+
+{id:121,t:'general',d:'בינוני',
+q:'מהו "גוש" ו"חלקה" בזיהוי נכס?',
+o:['שמות שכונות בירושלים','מספרי זיהוי של קרקע בפנקסי המקרקעין','קודי דיווח של עסקאות','שמות חלופיים לבלוק ומגרש'],a:1,
+f:'גוש וחלקה הם מספרי זיהוי של קרקע בפנקסי המקרקעין — הדרך הרשמית לזהות נכס ייחודי.',
+det:'כל עסקת מקרקעין מזוהה לפי גוש, חלקה ולעיתים תת-חלקה. כך מחפשים בטאבו.'},
+
+{id:122,t:'general',d:'קל',
+q:'מהו "היתר בנייה"?',
+o:['אישור ועד הבית לשיפוץ פנימי','אישור רשמי מהרשות המקומית לבצע עבודות בנייה, הרחבה או שינוי','רישיון עסק לקבלן','אישור הועדה המחוזית בלבד'],a:1,
+f:'היתר בנייה הוא אישור רשמי מהרשות המקומית לבצע עבודות בנייה, הרחבה או שינוי.',
+det:'מתווך שמוכר נכס עם תוספות ללא היתר — חייב לגלות זאת. זה מידע מהותי.'},
+
+{id:123,t:'general',d:'בינוני',
+q:'מהו "תב"ע" ומה חשיבותו לנדל"ן?',
+o:['חוזה בינלאומי לסחר במקרקעין','תוכנית תכנונית שקובעת מה מותר לבנות באזור ואת ייעוד הקרקע','הסכם בין עיריית והרשות הממשלתית','תקנה של מינהל מקרקעי ישראל'],a:1,
+f:'תב"ע (תוכנית בניין עיר) קובעת את ייעוד הקרקע (מגורים, מסחר, תעשייה) ומה מותר לבנות.',
+det:'מתווך שמוסר מידע על תב"ע חייב לצטט מקור רשמי. תב"ע קובעת את זכויות הבנייה.'},
+
+{id:124,t:'general',d:'קשה',
+q:'מה "תמ"א 38" ומה השפעתה על ערך הנכס?',
+o:['תוכנית לסובסידיית משכנתאות — מורידה ריבית','תוכנית לחיזוק מבנים מפני רעידות אדמה — לרוב מעלה ערך הנכס','תוכנית לשיכון ציבורי — מורידה ערך הנכסים הסמוכים','תקנה שמחייבת התקנת ממ"ד'],a:1,
+f:'תמ"א 38 היא תוכנית לחיזוק מבנים — עם תמריצי בנייה. לרוב מעלה ערך הדירות.',
+det:'מבנים שעוברים תמ"א 38 מקבלים חיזוק + תוספות בנייה. ערך הדירות בדרך כלל עולה.'},
+
+{id:125,t:'general',d:'בינוני',
+q:'מה ההבדל בין "שטח ברוטו" ל"שטח נטו"?',
+o:['אין הבדל — שני המונחים זהים','ברוטו כולל קירות ושטחים משותפים; נטו הוא השטח הפנימי הממשי','ברוטו = שטח הדירה + מרפסת; נטו = שטח הדירה בלבד','נטו הוא השטח בסביבת הנכס'],a:1,
+f:'ברוטו כולל קירות, מרחבים משותפים ועוד. נטו הוא השטח הפנימי הממשי של הדירה.',
+det:'מתווך חייב לציין מקור רשמי לנתון השטח. ברוטו/נטו = הבדל שיכול לשנות החלטת קנייה.'},
+
+{id:126,t:'general',d:'קל',
+q:'מי הוא "שמאי מקרקעין"?',
+o:['מתווך בכיר עם ניסיון מעל 10 שנים','בעל מקצוע מוסמך להעריך שווי נכסי מקרקעין','עורך דין המתמחה בנדל"ן','מהנדס שמוסמך לבדוק ליקויי בנייה'],a:1,
+f:'שמאי מקרקעין הוא מומחה מוסמך המעריך שווי נכסים — נדרש למשכנתא, מכירה, מיסוי.',
+det:'פעולות שמאות שמורות לשמאי בלבד. מתווך שאינו שמאי — לא יכול לבצע שומה.'},
+
+{id:127,t:'general',d:'קשה',
+q:'מהו "הסכם שיתוף" בנדל"ן?',
+o:['הסכם בין שני מתווכים לחלוקת עמלה','הסכם בין שותפים בנכס משותף על ניהולו — ללא פירוק שיתוף','הסכם ממשלתי לשיתוף מקרקעי ישראל','הסכם בין בעלי קרקע לבנות יחד'],a:1,
+f:'הסכם שיתוף הוא הסכם בין שותפים בנכס משותף המסדיר ניהולו — מונע פירוק שיתוף.',
+det:'ללא הסכם שיתוף — כל שותף יכול לדרוש פירוק שיתוף (מכירה כפויה).'},
+
+{id:128,t:'general',d:'בינוני',
+q:'האם מתווך חייב לציין שטח הנכס עם מקור רשמי?',
+o:['לא — הערכה מספיקה','כן — שטח הנכס ייאמר עם ציון המקור הרשמי','רק בנכסים מסחריים','לא — זה תפקיד השמאי'],a:1,
+f:'כן. שטח הנכס הוא מידע מהותי — חייב להיות מלווה במקור רשמי.',
+det:'מקורות רשמיים: נסח טאבו, תשריט בית משותף, היתר בנייה. שטח שגוי = מצג שווא.'},
+
+{id:129,t:'general',d:'קשה',
+q:'מהו "פירוק שיתוף" ומה מאפשר לשותף לדרוש?',
+o:['הסכם להפיכת נכס לדירות נפרדות','הליך שבו שותף יכול לדרוש מכירת הנכס וחלוקת התמורה','ביטול הסכם שיתוף בין מתווכים','מכירת חלק מהנכס ללא הסכמת השותפים'],a:1,
+f:'פירוק שיתוף הוא הליך שבו שותף בנכס יכול לדרוש מכירתו וחלוקת התמורה.',
+det:'אם שותף רוצה למכור ואחר לא — הפתרון הוא פירוק שיתוף. בית המשפט יורה על מכירה.'},
+
+{id:130,t:'general',d:'בינוני',
+q:'מה חייב מתווך לגלות לגבי ליקויים שראה בביקור בנכס?',
+o:['רק ליקויים מבניים שמהנדס אישר','מידע מהותי שנגלה בביקור — כולל ליקויים גלויים לעין — חייב להיגלות','רק אם הלקוח שואל על מצב הנכס','לא חייב — המתווך לא מהנדס'],a:1,
+f:'כל מידע מהותי שנגלה בביקור — כולל ליקויים נראים לעין — חייב להיגלות ללקוח.',
+det:'המתווך לא צריך להיות מהנדס, אבל מה שרואה בביקור — חייב לגלות.'},
+
+
+/* ══ שאלות נוספות מהחומרים שהועלו ══ */
+
+/* ── חוק המתווכים — מהחומר המפורט ── */
+{id:131,t:'law',d:'קל',
+q:'מהו הקשר בין חוק המתווכים לדיני הגנת הצרכן?',
+o:['אין קשר — אלה תחומים שונים לחלוטין','חוק המתווכים מתקשר לדיני הגנת הצרכן ונועד לצמצם פערי כוחות ומידע','חוק המתווכים מבוסס על דיני הנזיקין בלבד','הקשר הוא דרך חוק הגנת הפרטיות'],a:1,
+f:'חוק המתווכים מתקשר לדיני הגנת הצרכן — נועד לצמצם פערי כוחות ומידע בין ספקים לצרכנים.',
+det:'בשוק הנדל"ן יש מורכבות עסקאות גבוהה וסיכון עבור הצרכנים. החוק בא להגן עליהם.'},
+
+{id:132,t:'law',d:'בינוני',
+q:'אילו שלבים קדמו לתקנות האתיקה של 2024?',
+o:['הצבעה בכנסת בלבד','מחקר משווה בינלאומי, סקר לציבור, שולחנות עגולים ומחקר כלכלי','חוות דעת של רשם המתווכים בלבד','עצומה של מתווכים לשר המשפטים'],a:1,
+f:'לפני קביעת תקנות האתיקה בוצעה עבודת מטה: מחקר משווה, סקר לציבור, שולחנות עגולים ומחקר כלכלי.',
+det:'המחקר העלה צורך בהגדרת תפקיד המתווך וסטנדרט התנהגות גבוה — שיעצים מקצועיות ויפחית התנהלות לא נאותה.'},
+
+{id:133,t:'law',d:'קשה',
+q:'מה גילה "מחקר טיוב הרגולציה" שהוביל לתקנות האתיקה?',
+o:['שהמתווכים מצוינים ואין צורך בתקנות','פערי כוחות בשוק ותופעות של התנהלות לא הוגנת ולא מקצועית','שהעמלות נמוכות מדי ויש להעלותן','שיש עודף מתווכים מורשים בשוק'],a:1,
+f:'המחקר העלה פערי כוחות בשוק ותופעות רבות של התנהלות שאינה נאותה, הוגנת ומקצועית.',
+det:'לכן הוחלט לבצע קונקרטיזציה ופירוט של החובות הקיימות בחוק — דרך תקנות האתיקה.'},
+
+{id:134,t:'law',d:'בינוני',
+q:'מה אישר ועדת הפנים והגנת הסביבה בתאריך 29.7.2024?',
+o:['תיקון חדש לחוק המתווכים','תקנות המתווכים במקרקעין (אתיקה מקצועית) התשפ"ד-2024','תעריפי עמלות חדשים למתווכים','ביטול חובת הרישיון למתווכים'],a:1,
+f:'ועדת הפנים אישרה ב-29.7.2024 את תקנות המתווכים במקרקעין (אתיקה מקצועית) התשפ"ד-2024.',
+det:'לאחר אישור הוועדה, חתם השר על התקנות ב-4.9.2024 ופרסמן ברשומות.'},
+
+{id:135,t:'law',d:'קשה',
+q:'מה פירוש "קונקרטיזציה" בהקשר של תקנות האתיקה?',
+o:['יצירת חוקים חדשים שלא היו קודם','פירוט ועיגון של חובות שכבר קיימות בחוק — עם הגדרות ספציפיות יותר','ביטול חובות ישנות והחלפתן בחדשות','תרגום החוק לשפות נוספות'],a:1,
+f:'קונקרטיזציה = פירוט ועיגון של המידע והחובות המהותיים הקבועים כבר בחוק — בצורה ספציפית יותר.',
+det:'לא נוצרו חובות חדשות מאפס — אלא ניתן תוכן ספציפי לחובות הכלליות שהיו בחוק מ-1996.'},
+
+/* ── תקנות האתיקה — מהחומר המפורט ── */
+{id:136,t:'ethics',d:'בינוני',
+q:'לקוח שהתעניין בנכס ופרטיו נלקחו — מה זכויותיו לגבי שימוש עתידי בפרטים?',
+o:['אין לו זכויות — נתן פרטיו מרצון','זכאי לסרב לשימוש בפרטיו בכל עת, גם אחרי שנמנע מסירוב בתחילה','זכאי לסרב רק תוך 30 יום מהמסירה','זכאי לסרב רק לגבי נכסים שאינם באותו אזור'],a:1,
+f:'הלקוח רשאי להודיע על סירובו לשימוש בפרטיו בכל עת — אף לאחר שנמנע מסירוב בהזדמנות הראשונה.',
+det:'זכות הסירוב אינה פוקעת. הלקוח יכול תמיד להפסיק את קבלת ההצעות ממתווך זה.'},
+
+{id:137,t:'ethics',d:'קשה',
+q:'מתווך שנותן שירות נוסף (למשל ייעוץ משכנתא) — מה חייב לציין בחשבונית?',
+o:['סכום כולל עם הערה "כולל שירותים"','סכום נפרד לתיווך וסכום נפרד לכל שירות נוסף','רק את עלות השירות הנוסף, התיווך נכלל','להוסיף 17% מע"מ על הכל יחד'],a:1,
+f:'חובה להפריד: לציין כמה עבור תיווך וכמה עבור כל שירות נוסף — בנפרד ובמפורש.',
+det:'הפרדת שירותים מאפשרת ללקוח לדעת בדיוק על מה הוא משלם ולהחליט אם רוצה כל שירות.'},
+
+{id:138,t:'ethics',d:'בינוני',
+q:'כשמתווך פונה לאדם לראשונה לעניין אותו בנכס — מה חייב לציין מיד?',
+o:['את מחיר הנכס המבוקש','את שמו בלבד','את עובדת היותו מתווך','שיש לו רישיון בתוקף'],a:2,
+f:'כשמתווך פונה לאדם לראשונה לעניין אותו בנכס — חייב לציין מייד שהוא מתווך.',
+det:'הכלל נועד למנוע מצב שהאדם מגלה בשלב מאוחר שמדובר במתווך. שקיפות מהרגע הראשון.'},
+
+{id:139,t:'ethics',d:'קשה',
+q:'מה ההגדרה של "מידע מהותי" שמתווך חייב לציין לגבי שטח הנכס?',
+o:['כל שטח שהמוכר מוסר בעל-פה','שטח הנכס עם ציון המקור הרשמי עליו מסתמך המתווך','רק שטח ברוטו בלבד','שטח לפי הערכת המתווך בלבד'],a:1,
+f:'שטח הנכס חייב להימסר עם ציון המקור הרשמי עליו מסתמך המתווך.',
+det:'מקורות רשמיים: נסח טאבו, תשריט בית משותף, היתר בנייה. הצגת שטח ללא מקור — בעייתית.'},
+
+{id:140,t:'ethics',d:'בינוני',
+q:'מה חובת המתווך לגבי מידע מהותי שנגלה בביקור בנכס?',
+o:['לדווח רק אם הלקוח שאל על כך','לגלות מידע מהותי שנגלה בביקור — כחלק מחובת הגילוי','לתעד בחוזה אך לא חייב לציין בעל-פה','לגלות רק אם יש ליקוי מבני'],a:1,
+f:'מידע מהותי שנגלה בביקור בנכס — חייב להיגלות ללקוח כחלק מחובת הגילוי.',
+det:'המתווך אינו מהנדס, אך מה שרואה בביקור — חייב לגלות. "לא ראיתי" אינה תשובה מספקת.'},
+
+{id:141,t:'ethics',d:'קשה',
+q:'מה בדיוק כולל חובת "הפרדת שירותים" בתקנות האתיקה?',
+o:['איסור לתת שירות נוסף בכלל','כשמתווך נותן שירות נוסף — חייב להבחין במפורש בסכומים שגובה עבור כל שירות','חובה לגבות שירות נוסף בחשבונית נפרדת','חובה לקבל אישור הרשם לכל שירות נוסף'],a:1,
+f:'הפרדת שירותים: כשמתווך נותן שירותים נוספים — חובה להבחין במפורש בסכומים לכל שירות.',
+det:'ללקוח חשוב לדעת: כמה הוא משלם על תיווך וכמה על כל שירות אחר שמוצע לו.'},
+
+{id:142,t:'ethics',d:'בינוני',
+q:'לגבי פרסום נכס — מה ההבדל בין נכס פרטי לנכס תאגידי?',
+o:['אין הבדל — חובות זהות לשניהם','לנכס פרטי (בעלות יחיד) — הסכמה בכתב; לתאגיד — הסכמה בכל דרך מתועדת','לנכס תאגידי — אין צורך בהסכמה','הבדל רק בגובה העמלה המותרת'],a:1,
+f:'לדירת מגורים בבעלות יחיד — חובה לקבל הסכמה בכתב. לנכס תאגידי — הסכמה בכל דרך מתועדת.',
+det:'ההבחנה נועדה להגן על הפרט (יחיד) יותר מאשר על תאגיד שמניח שמיוצג על ידי אנשי מקצוע.'},
+
+{id:143,t:'ethics',d:'קשה',
+q:'מה חובת המתווך כשהוא מוסר מידע תכנוני שאינו מחויב למוסרו?',
+o:['יכול למסור חופשי ללא הגבלה','אסור למסור מידע תכנוני בכלל','אם בחר למסור — חייב לצטט את הפרסום הרשמי עליו הסתמך','חייב לאשש עם השמאי תחילה'],a:2,
+f:'כשמתווך בוחר למסור מידע תכנוני (הוא לא חייב) — חייב לצטט את הפרסום הרשמי עליו הסתמך.',
+det:'הדגש: "אם בחר לעשות כן" — החובה אינה לאסוף מידע תכנוני, אלא לאמת אם כן מוסר.'},
+
+/* ── פיקוח ואכיפה — מהחומר המפורט ── */
+{id:144,t:'law',d:'בינוני',
+q:'מה עילת התלונה כשמתווך ביצע פעולות משפטיות אסורות?',
+o:['אין עילה — פעולות משפטיות מותרות','סיוע בעריכת מסמכים משפטיים או ייצוג לקוח במשא ומתן — עילת תלונה','עילה רק אם גרם נזק כספי','עילה רק אם הלקוח לא ידע'],a:1,
+f:'מתווך שסייע בעריכת מסמכים משפטיים (כגון חוזה) או ייצג לקוח במשא ומתן — עילת תלונה תקפה.',
+det:'סעיף 12 אוסר זאת. גם "סיוע" לעורך דין בניסוח — אסור. הפרה מהווה עבירת משמעת.'},
+
+{id:145,t:'law',d:'קל',
+q:'מה הצעד הראשון כשרוצים להגיש תלונה נגד מתווך?',
+o:['לפנות לבית משפט השלום','להגיש תלונה לרשם המתווכים','לפנות ישירות לוועדה המשמעתית','להודיע למתווך תחילה בכתב'],a:1,
+f:'הצעד הראשון הוא הגשת תלונה לרשם המתווכים — ממנו מתחיל כל הליך.',
+det:'לאחר קבלת התלונה, הרשם מפנה לבודק מוסמך שבוחן ומחליט אם לפתוח הליך משמעתי.'},
+
+{id:146,t:'law',d:'בינוני',
+q:'האם מתווך שהתרשל באופן חמור יכול להיתבע בתלונה?',
+o:['לא — רשלנות היא עניין אזרחי בלבד','כן — רשלנות חמורה היא עילת תלונה תקפה','רק אם הלקוח הוכיח נזק מעל 50,000 ש"ח','לא — צריך לפנות לבית משפט'],a:1,
+f:'כן. מתווך שהתרשל באופן חמור — ניתן להגיש עליו תלונה לרשם המתווכים.',
+det:'עילות תלונה כוללות: הפרת סודיות, אי-גילוי עניין אישי, רשלנות חמורה, הסתרת מידע ועוד.'},
+
+{id:147,t:'law',d:'קשה',
+q:'מה ההבדל בין תלונה לרשם לבין תביעה אזרחית?',
+o:['אין הבדל — שניהם מובילים לאותה תוצאה','תלונה לרשם = הליך משמעתי מקצועי; תביעה אזרחית = פיצוי כספי בבית משפט','תלונה לרשם = מהירה יותר בלבד','תביעה אזרחית אינה אפשרית נגד מתווך'],a:1,
+f:'תלונה לרשם = הליך משמעתי שיכול לפגוע ברישיון. תביעה אזרחית = לקבל פיצוי כספי.',
+det:'ניתן לנקוט שתי הדרכים במקביל — תלונה לרשם לצד תביעה אזרחית בבית משפט.'},
+
+/* ── שאלות Q&A מהחומר שהועלה ── */
+{id:148,t:'ethics',d:'קשה',
+q:'לא ידעתי עברית והמתווך החתים אותי על בלעדיות. האם ההסכם תקף?',
+o:['כן — חתמת ולכן מחויב לכל התנאים','לא — המתווך חייב להסביר בשפה מובנת או להחתים בשפת הלקוח','כן — אחריות הלקוח להבין לפני חתימה','כן אם היה עורך דין נוכח'],a:1,
+f:'לא. על המתווך להסביר את כל פרטי טופס ההזמנה בשפה מובנת — כולל תנאי בלעדיות.',
+det:'חלופה: להחתים את הלקוח על מסמך בשפתו. חתימה ללא הבנה עלולה לפסול את ההסכם.'},
+
+{id:149,t:'ethics',d:'בינוני',
+q:'מתווך שייצג אותי במכירה לא גילה שייצג גם את המוכר. מה זכויותי?',
+o:['אין זכויות — ייצוג כפול חוקי','ניתן להגיש תלונה — המתווך חייב לגלות ייצוג כפול ולקבל הסכמה בכתב','זכאי רק להחזר של מחצית העמלה','זכאי לביטול החוזה אוטומטית'],a:1,
+f:'בעסקה שמתווך מייצג יותר מצד אחד — חייב לגלות לכולם מראש ובכתב ולתעד הצעות.',
+det:'ייצוג כפול ללא גילוי = הפרה חמורה. ניתן להגיש תלונה לרשם המתווכים.'},
+
+{id:150,t:'ethics',d:'בינוני',
+q:'מתווך מתקשר אליי כל הזמן ומציע נכסים אחרים אחרי שמצא לי משרד. האם זה חוקי?',
+o:['כן — מדובר בשירות לקוחות רגיל','לא אם לא הודיע מראש על השימוש בפרטים ולא אפשר סירוב','כן — נתת פרטים ולכן הסכמת','לא — אחרי עסקה אחת אסור לפנות שוב'],a:1,
+f:'על המתווך להודיע מראש על שימוש בפרטים למטרות שיווק נוספות ולאפשר סירוב.',
+det:'בכל עת ניתן לסרב לקבל הצעות נוספות — אפילו אחרי שהסכמת בתחילה.'},
+
+{id:151,t:'ethics',d:'קשה',
+q:'מתווך החתים אותי על סעיף שמחייב להשתמש באשתו כעורכת דין. האם זה חוקי?',
+o:['כן — עורכת הדין מנוסה ולכן מקובל','כן — אם גילה את הקשר','לא — אסור להתנות תיווך ברכישת שירות אחר, גם אם זו אשתו','לא — רק אם גבה עמלה כפולה'],a:2,
+f:'לא. תקנה 12 אוסרת להתנות שירותי תיווך ברכישת שירותים אחרים — כולל עו"ד שהוא קרוב משפחה.',
+det:'הדוגמה הזו מופיעה ישירות בחומר הלימוד כדוגמה לפרקטיקה אסורה.'},
+
+{id:152,t:'ethics',d:'בינוני',
+q:'לקוחות דרשו ממני להראות רישיון תיווך לפני שחתמו. האם הם צודקים?',
+o:['לא — זו בקשה חריגה ולא נהוגה','כן — חובה על המתווך להציג רישיון תקף על פי דרישת הלקוח','רק אם הלקוח מגיש תלונה מקביל','לא — מספיק להפנות לאתר רשם המתווכים'],a:1,
+f:'כן. חובה על המתווך להציג ללקוחותיו, על פי דרישתם, רישיון תיווך בתוקף.',
+det:'לקוח שמבקש לראות רישיון — ממש מפעיל את זכותו החוקית. אין בזה שום דבר חריג.'},
+
+{id:153,t:'ethics',d:'קשה',
+q:'מתווך שאינו שמאי — האם רשאי להעריך שווי נכס ללקוח?',
+o:['כן — הערכה כללית מותרת','כן — אם מציין שזו הערכה לא רשמית','לא — שומת מקרקעין שמורה לשמאים; מתווך לא יעשה פעולות שיוחדו לשמאי','כן — אם הלקוח מבין שזו לא שמאות רשמית'],a:2,
+f:'מתווך שאינו שמאי לא יערוך שומת מקרקעין ולא יעשה פעולות השמורות לשמאי.',
+det:'תקנות האתיקה קובעות הפרדה ברורה: שמאות = שמאי. תיווך = מתווך. אין ערבוב.'},
+
+{id:154,t:'contracts',d:'בינוני',
+q:'לקוח ביקש להפסיק שיווק נכסו ויש הסכם בלעדיות — מה הדין?',
+o:['המתווך חייב להפסיק מיד ללא תנאי','המתווך רשאי להמשיך בשיווק כל עוד הסכם הבלעדיות בתוקף','המתווך יפסיק בתוך 7 ימים','יש לפנות לבית משפט להכרעה'],a:1,
+f:'כשקיים הסכם בלעדיות תקף — המתווך רשאי להמשיך בפעולות שיווק גם אם הלקוח ביקש לעצור.',
+det:'זאת בדיוק המשמעות של הסכם בלעדיות — הוא מאפשר המשך שיווק. לכן חשוב לקרוא לפני חתימה.'},
+
+{id:155,t:'contracts',d:'קשה',
+q:'מה על מתווך לעשות לאחר כניסת התקנות, כשלקוח מבקש עותק חוזה שנחתם אחריהן?',
+o:['יכול לסרב אם עברו יותר מ-3 שנים','חייב לתת עותק מכל מסמך עליו חתם הלקוח — ולשמור 7 שנים','חייב לתת רק אם בכתב ועם אימות עו"ד','ייתן רק אם הלקוח יכסה עלויות ההדפסה'],a:1,
+f:'חובה על המתווך לתת עותק מכל מסמך עליו חתם הלקוח — ולשמור מסמכים 7 שנים לפחות.',
+det:'סיטואציה זו מופיעה ישירות בחומר: לקוח שביקש עותק לאחר 6 חודשים ונדחה — יש לו זכות.'},
+
+{id:156,t:'contracts',d:'בינוני',
+q:'מה חייב מתווך לדעת על מצב הנכס לפני שמוסר מידע ללקוח?',
+o:['כל פרט קטן — אחרת אסור לפרסם','מידע מהותי: בעלות, שטח עם מקור, תשלומי חובה — ולא חייב לדעת הכל','רק מחיר ומספר חדרים','את כל ההיסטוריה של הנכס'],a:1,
+f:'המתווך חייב לברר ולמסור מידע מהותי — בעלות, שטח, תשלומי חובה ועוד — לא כל פרט קטן.',
+det:'אינו חייב לדעת הכל, אך כן מחויב לברר נתונים מהותיים שיכולים להשפיע על ההחלטה.'},
+
+/* ── מיסוי נדל"ן — מהחומר הנוסף ── */
+{id:157,t:'tax',d:'בינוני',
+q:'מה חובת המתווך לגבי מיסוי בעסקת מכר?',
+o:['לחשב את כל המסים עבור הלקוח','לגבות את המסים ולהעביר לרשות','להסביר מי משלם מה ולהפנות ליועץ מס מוסמך','לא להתייחס לנושא המיסוי בכלל'],a:2,
+f:'המתווך מסביר מי משלם מה (מוכר-שבח, קונה-רכישה) ומפנה ליועץ מס לחישוב מדויק.',
+det:'חישוב מס הוא תחום מוסמך. ייעוץ שגוי עלול לגרום נזק ולחייב את המתווך בפיצוי.'},
+
+{id:158,t:'tax',d:'קשה',
+q:'האם עמלת תיווך מוכרת כהוצאה גם לצורך מס רכישה של הקונה?',
+o:['כן — עמלת תיווך מוכרת לשני הצדדים','לא — עמלת תיווך מוכרת רק למוכר לצורך מס שבח','כן — אך רק חצי ממנה','לא — עמלה לא מוכרת כלל'],a:1,
+f:'עמלת תיווך שמשלם המוכר מוכרת לו כהוצאה לצורך חישוב מס שבח — לא למס רכישה של הקונה.',
+det:'מס רכישה מחושב לפי שווי הנכס ומדרגות קבועות — ללא הפחתות אישיות כמו עמלות.'},
+
+{id:159,t:'tax',d:'בינוני',
+q:'מה "פטור ליום הולדת 18" במס שבח?',
+o:['פטור לרוכשים מתחת לגיל 18','פטור ממס שבח פעם ב-18 חודשים לדירת מגורים מזכה','פטור לדירות שנרכשו לפני גיל 18','פטור לאחר 18 שנות בעלות'],a:1,
+f:'פטור ממס שבח ניתן לדירת מגורים מזכה פעם ב-18 חודשים — לא כל מכירה זכאית.',
+det:'יש לבדוק שלא עברה פחות מ-18 חודשים מהמכירה האחרונה שהיתה פטורה.'},
+
+/* ── דיני מקרקעין — מהחומר הנוסף ── */
+{id:160,t:'general',d:'בינוני',
+q:'מה חייב מתווך לגלות כשנכס נמכר בכינוס נכסים?',
+o:['לא חייב לגלות — זה מידע פרטי','לגלות רק אחרי חתימת חוזה המכר','לגלות ללקוח לפני שמתחייב כלפי המתווך — כי יש נהלים מיוחדים','לגלות רק אם הלקוח שואל ישירות'],a:2,
+f:'כשנכס נמכר ע"י כונס נכסים — חובה לגלות ללקוח לפני שהוא מתחייב כלפי המתווך.',
+det:'מכירה ע"י כונס כרוכה בנהלים מיוחדים, זמנים שונים ולעיתים סיכונים נוספים.'},
+
+{id:161,t:'general',d:'קשה',
+q:'מה "שכירות הוגנת" ומה הקשר לתיווך?',
+o:['שכירות בתנאים הוגנים שמתווך מחייב','חוק שקובע תנאי מינימום לדירה — מתווך שמתווך דירה לא ראויה חייב להפנות לחוק זה','הסכם שכירות מוסכם בין הצדדים','תוכנית ממשלתית לסיוע בשכר דירה'],a:1,
+f:'חוק שכירות הוגנת קובע תנאי מינימום לדירה. מתווך שמתווך דירה לא ראויה — חייב להפנות ללקוח.',
+det:'אם דירה אינה ראויה למגורים — על המתווך לגלות זאת ולהפנות ללקוח לחוק שכירות הוגנת.'},
+
+{id:162,t:'general',d:'בינוני',
+q:'האם מתווך שמוכר נכס עם תוספת בנייה ללא היתר חייב לגלות זאת?',
+o:['לא — זה עסק של הקונה לבדוק','כן — בנייה ללא היתר היא מידע מהותי שחייב לגלות','רק אם הרשות המקומית ביקשה להרוס','רק אם הלקוח שאל על מצב הרישוי'],a:1,
+f:'כן. בנייה ללא היתר היא מידע מהותי שיכול להשפיע על ההחלטה — חייב לגלות.',
+det:'קונה שרוכש נכס עם בנייה לא חוקית עלול להיתבע להרוס. מדובר בסיכון כספי משמעותי.'},
+
+{id:163,t:'general',d:'קשה',
+q:'מה ההבדל בין "בית משותף" ל"דירה ב בניין" מהיבט משפטי?',
+o:['אין הבדל — זה אותו הדבר','בית משותף = יחידות בנכס שרשומות בפנקס הבתים המשותפים עם חלק ברכוש המשותף','בית משותף = בניין ציבורי בלבד','בית משותף = בניין מעל 4 קומות'],a:1,
+f:'בית משותף הוא נכס שרשום בפנקס הבתים המשותפים — לכל יחידה יש גם חלק ברכוש המשותף.',
+det:'רישום בפנקס הוא חובה. כל בעל דירה מחזיק ביחידתו + חלק ברכוש המשותף (גג, מדרגות וכד׳).'},
+
+{id:164,t:'general',d:'בינוני',
+q:'מה "נסח טאבו" ומדוע הוא חשוב?',
+o:['אישור ממשרד הפנים על זיהוי הנכס','תדפיס ממרשם המקרקעין המציג מצב רישום הנכס — בעלות, שעבודים, הערות','דוח של שמאי על שווי הנכס','חוזה רשמי בין הצדדים'],a:1,
+f:'נסח טאבו הוא תדפיס ממרשם המקרקעין המציג: בעלות, משכנתאות, הערות אזהרה ועוד.',
+det:'בדיקת נסח טאבו היא חיונית בכל עסקה. המתווך חייב לבדוק את מצב הרישום.'},
+
+{id:165,t:'general',d:'קשה',
+q:'מה הכוונה ב"זכויות בנייה" של נכס?',
+o:['זכות לבנות ממ"ד בלבד','הכמות המותרת לבנייה על קרקע לפי התב"ע — שטח, קומות, ייעוד','זכות הבנקים לעקל את הנכס','אישורי הבנייה שקיבל הנכס בעבר'],a:1,
+f:'זכויות בנייה = מה מותר לבנות על הקרקע לפי התב"ע — שטח, קומות, אחוזי בנייה, ייעוד.',
+det:'מתווך שמוסר מידע על זכויות בנייה חייב לצטט מקור רשמי (תב"ע, היתרים). מידע קריטי לעסקה.'},
+
+];
+
+/* ══════════════════════════════════════════════
+   FLASHCARDS — 20 כרטיסים
+══════════════════════════════════════════════ */
+const FC=[
+{t:'חוק המתווכים', q:'מה שנת חוק המתווכים?', a:'1996.'},
+{t:'חוק המתווכים', q:'מה ההגדרה של תיווך?', a:'הפגשה בתמורה בין שני צדדים לשם התקשרות בעסקה.'},
+{t:'חוק המתווכים', q:'מה אוסר סעיף 12?', a:'עריכת מסמכים משפטיים וייצוג לקוח במשא ומתן.'},
+{t:'חוק המתווכים', q:'מה קובע סעיף 10 לגבי עניין אישי?', a:'אסור לתווך כשיש עניין אישי — אלא בגילוי והסכמה בכתב.'},
+{t:'חוק המתווכים', q:'מה הסנקציה על תיווך ללא רישיון?', a:'ענישה פלילית.'},
+{t:'תקנות האתיקה', q:'כמה שנים לשמור מסמכי תיווך?', a:'7 שנים לפחות.'},
+{t:'תקנות האתיקה', q:'מה אסור לגבות מעבר לדמי תיווך?', a:'דמי קדימה, דמי רצינות, תשלום לחידוש חוזה — כולם אסורים.'},
+{t:'תקנות האתיקה', q:'האם מתווך יכול לשמות נכס שמתווך?', a:'לא — לא ניתן לשלב שמאות ותיווך לאותו נכס.'},
+{t:'תקנות האתיקה', q:'כמה שנות המתנה לעו"ד-מתווך על אותו נכס?', a:'3 שנים.'},
+{t:'תקנות האתיקה', q:'מה חייב לכלול כל פרסום מטעם מתווך?', a:'שמו, היותו מתווך ומספר רישיונו.'},
+{t:'חוזים', q:'האם מתווך יכול לערוך זיכרון דברים?', a:'לא — זיכרון דברים הוא מסמך משפטי אסור.'},
+{t:'חוזים', q:'מה תנאי לזכאות מתווך לשכר?', a:'חוזה בכתב + הפגשה שהביאה לעסקה.'},
+{t:'חוזים', q:'מה מאפשר הסכם בלעדיות?', a:'המשך שיווק גם אם הלקוח ביקש להפסיק.'},
+{t:'מיסוי', q:'מי משלם מס שבח?', a:'המוכר, על הרווח שנוצר.'},
+{t:'מיסוי', q:'מי משלם מס רכישה?', a:'הקונה, בעת הרכישה.'},
+{t:'מיסוי', q:'מהו שיעור מס שבח אחרי 2014?', a:'25% על השבח הריאלי.'},
+{t:'מקרקעין', q:'מהו "טאבו"?', a:'לשכת רישום המקרקעין.'},
+{t:'מקרקעין', q:'מהי "הערת אזהרה"?', a:'רישום בטאבו על זכות עתידית.'},
+{t:'מקרקעין', q:'מהי "חכירה" מרמ"י?', a:'זכות שימוש ל-49 או 98 שנה ללא בעלות.'},
+{t:'מקרקעין', q:'מהי "זיקת הנאה"?', a:'זכות להשתמש בנכס של אחר לצורך מסוים (מעבר, צינור וכד׳).'},
+];
+
+/* ══════════════════════════════════════════════
+   STATE
+══════════════════════════════════════════════ */
+let G={
+  score:0, totalAnswered:0, totalCorrect:0,
+  wrongIds:new Set(), selectedTopics:new Set(['law','ethics','contracts','tax','general']),
+  mode:'practice', topicStats:{}, selectedDiff:'all'
+};
+let QZ={qs:[],cur:0,answered:false,startTime:0,timer:null,timeLeft:90,correct:0,wrong:0};
+let FLASH={cards:[...FC],idx:0,flipped:false};
+
+function saveG(){localStorage.setItem('tv2',JSON.stringify({score:G.score,totalAnswered:G.totalAnswered,totalCorrect:G.totalCorrect,wrongIds:[...G.wrongIds],topicStats:G.topicStats}));}
+function loadG(){
+  try{
+    const s=JSON.parse(localStorage.getItem('tv2')||'{}');
+    if(s.score)G.score=s.score;if(s.totalAnswered)G.totalAnswered=s.totalAnswered;
+    if(s.totalCorrect)G.totalCorrect=s.totalCorrect;if(s.wrongIds)G.wrongIds=new Set(s.wrongIds);
+    if(s.topicStats)G.topicStats=s.topicStats;
+  }catch(e){}
+}
+
+/* ══ SCREENS ══ */
+let curScr='home';
+function showScr(name){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('s-'+name).classList.add('active');
+  document.querySelectorAll('.bnav-btn').forEach(b=>b.classList.remove('active'));
+  const map={home:'bn-home',quiz:'bn-quiz',flash:'bn-flash',stats:'bn-stats',results:'bn-quiz'};
+  if(map[name])document.getElementById(map[name])?.classList.add('active');
+  curScr=name;
+  document.getElementById('prog-bar').style.display=name==='quiz'?'block':'none';
+  document.getElementById('scroll').scrollTop=0;
+}
+
+/* ══ HOME ══ */
+function buildHome(){
+  const tl=document.getElementById('topic-list');
+  tl.innerHTML=TOPICS.map(t=>{
+    const cnt=Q.filter(q=>q.t===t.id).length;
+    const sel=G.selectedTopics.has(t.id);
+    const ts=G.topicStats[t.id]||{c:0,t:0};
+    const pct=ts.t>0?Math.round(ts.c/ts.t*100):0;
+    return `<div class="topic-row${sel?' sel':''}" onclick="toggleTopic('${t.id}')">
+      <div class="tr-icon">${t.icon}</div>
+      <div class="tr-info">
+        <div class="tr-name">${t.name}</div>
+        <div class="tr-meta">
+          <span class="tr-count">${cnt} שאלות</span>
+          ${ts.t>0?`<span class="tr-prog">${pct}% הצלחה</span>`:''}
+        </div>
+      </div>
+      <div class="tr-check">${sel?'✓':''}</div>
+    </div>`;
+  }).join('');
+  const pct=G.totalAnswered>0?Math.round(G.totalCorrect/G.totalAnswered*100):0;
+  document.getElementById('hs-total').textContent=Q.length;
+  document.getElementById('hs-done').textContent=G.totalAnswered;
+  document.getElementById('hs-pct').textContent=G.totalAnswered>0?pct+'%':'—';
+  document.getElementById('tb-badge').textContent='⭐ '+G.score;
+}
+function setDiff(d){
+  G.selectedDiff=d;
+  document.querySelectorAll('.diff-btn').forEach(b=>b.classList.remove('active'));
+  const ids={all:'diff-all','קל':'diff-easy','בינוני':'diff-med','קשה':'diff-hard'};
+  document.getElementById(ids[d])?.classList.add('active');
+  updateDiffInfo();
+}
+function updateDiffInfo(){
+  let pool=Q.filter(q=>G.selectedTopics.has(q.t));
+  if(G.selectedDiff!=='all')pool=pool.filter(q=>q.d===G.selectedDiff);
+  const labels={all:'הכל','קל':'קל','בינוני':'בינוני','קשה':'קשה'};
+  document.getElementById('diff-info').textContent=`${pool.length} שאלות זמינות (${G.selectedDiff==='all'?'כל הרמות':'רמה '+labels[G.selectedDiff]})`;
+}
+function toggleTopic(id){
+  if(G.selectedTopics.has(id)){if(G.selectedTopics.size>1)G.selectedTopics.delete(id);}
+  else G.selectedTopics.add(id);
+  buildHome();updateDiffInfo();
+}
+function setMode(m){
+  G.mode=m;
+  document.querySelectorAll('.mode-card').forEach(c=>c.classList.remove('active'));
+  document.getElementById('mc-'+m)?.classList.add('active');
+}
+
+/* ══ QUIZ ══ */
+function startQuiz(){
+  let pool=Q.filter(q=>G.selectedTopics.has(q.t));
+  if(G.selectedDiff!=='all')pool=pool.filter(q=>q.d===G.selectedDiff);
+  if(!pool.length){toast('אין שאלות ברמה זו — בחר רמה אחרת','bad');return;}
+  pool=shuffle(pool).slice(0,Math.min(20,pool.length));
+  QZ={qs:pool,cur:0,answered:false,startTime:Date.now(),timer:null,timeLeft:90,correct:0,wrong:0};
+  showScr('quiz');renderQ();
+}
+function startWrong(){
+  const wrong=Q.filter(q=>G.wrongIds.has(q.id));
+  if(!wrong.length){toast('אין שגיאות לחזרה! 🎉','good');return;}
+  QZ={qs:shuffle(wrong),cur:0,answered:false,startTime:Date.now(),timer:null,timeLeft:90,correct:0,wrong:0};
+  showScr('quiz');renderQ();
+}
+
+function renderQ(){
+  const q=QZ.qs[QZ.cur];QZ.answered=false;
+  const tot=QZ.qs.length,cur=QZ.cur+1,pct=Math.round(QZ.cur/tot*100);
+  document.getElementById('prog-txt').textContent=`שאלה ${cur} מתוך ${tot}`;
+  document.getElementById('prog-pct').textContent=pct+'%';
+  document.getElementById('prog-fill').style.width=pct+'%';
+  document.getElementById('qh-num').textContent=cur;
+  document.getElementById('qh-topic').textContent=TOPICS.find(t=>t.id===q.t)?.name||q.t;
+  const diffColors={'קל':'background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0','בינוני':'background:#fffbeb;color:#d97706;border:1px solid #fde68a','קשה':'background:#fef2f2;color:#dc2626;border:1px solid #fecaca'};
+  document.getElementById('qh-diff').innerHTML=`<span style="display:inline-flex;align-items:center;gap:3px;border-radius:99px;padding:2px 9px;font-size:10px;font-weight:700;${diffColors[q.d]||''}">${q.d==='קל'?'🟢':q.d==='בינוני'?'🟡':'🔴'} ${q.d}</span>`;
+  document.getElementById('q-text').textContent=q.q;
+
+  // ── ערבוב אקראי של התשובות בכל שאלה ──
+  const correctText = q.o[q.a];
+  let opts = [...q.o];
+  // לרמה קשה — ערבב את האפשרויות השגויות פנימית גם
+  if(q.d === 'קשה') opts = shuffleWrong(opts, q.a);
+  // ערבב את כל האפשרויות
+  const shuffled = shuffleOpts(opts);
+  QZ.shuffledCorrectIdx = shuffled.findIndex(o => o === correctText);
+
+  const letters=['א','ב','ג','ד'];
+  document.getElementById('options').innerHTML=shuffled.map((o,i)=>`
+    <button class="opt" onclick="answer(${i})" id="opt${i}">
+      <span class="opt-ltr">${letters[i]}</span>
+      <span class="opt-txt">${o}</span>
+    </button>`).join('');
+  QZ.shuffledOpts = shuffled;
+  document.getElementById('feedback').className='feedback';
+  document.getElementById('fb-detail').className='fb-detail';
+  document.getElementById('next-btn').className='next-btn';
+  document.getElementById('fb-more-btn').textContent='📖 פרטים נוספים';
+  if(G.mode==='exam')startTimer();
+  else document.getElementById('qh-timer').className='qh-timer hidden';
+}
+
+// ערבב סדר האפשרויות באקראי
+function shuffleOpts(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+// לרמה קשה: הפוך סדר של שתי תשובות שגויות כדי לבלבל יותר
+function shuffleWrong(opts, correctIdx){
+  const a=[...opts];
+  const wrongIdxs=a.map((_,i)=>i).filter(i=>i!==correctIdx);
+  // החלף שתיים מהשגויות באקראי
+  if(wrongIdxs.length>=2){
+    const i=wrongIdxs[Math.floor(Math.random()*wrongIdxs.length)];
+    const j=wrongIdxs.filter(x=>x!==i)[Math.floor(Math.random()*(wrongIdxs.length-1))];
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+function startTimer(){
+  QZ.timeLeft=90;clearInterval(QZ.timer);
+  const el=document.getElementById('qh-timer');el.className='qh-timer';el.textContent=90;
+  QZ.timer=setInterval(()=>{
+    QZ.timeLeft--;el.textContent=QZ.timeLeft;
+    if(QZ.timeLeft<=10)el.classList.add('urgent');
+    if(QZ.timeLeft<=0){clearInterval(QZ.timer);if(!QZ.answered)answer(-1);}
+  },1000);
+}
+
+function answer(chosen){
+  if(QZ.answered)return;QZ.answered=true;clearInterval(QZ.timer);
+  const q=QZ.qs[QZ.cur];
+  const correctIdx=QZ.shuffledCorrectIdx;
+  const right=chosen===correctIdx;
+  document.querySelectorAll('.opt').forEach((b,i)=>{
+    b.disabled=true;b.style.pointerEvents='none';
+    if(i===correctIdx)b.classList.add('correct');
+    else if(i===chosen&&!right)b.classList.add('wrong');
+  });
+  const fb=document.getElementById('feedback');
+  fb.className='feedback show '+(right?'win':'lose');
+  document.getElementById('fb-icon').textContent=right?'✅':'❌';
+  document.getElementById('fb-title').textContent=right?'תשובה נכונה! 🎉':'לא נכון 😕';
+  document.getElementById('fb-text').textContent=q.f;
+  document.getElementById('fb-detail').textContent=q.det||'';
+  const nb=document.getElementById('next-btn');
+  nb.className='next-btn show';
+  nb.textContent=QZ.cur<QZ.qs.length-1?'השאלה הבאה ←':'לתוצאות 🏆';
+  G.totalAnswered++;
+  if(!G.topicStats[q.t])G.topicStats[q.t]={c:0,t:0};
+  G.topicStats[q.t].t++;
+  if(right){
+    G.totalCorrect++;QZ.correct++;
+    G.score+=10+(G.mode==='exam'?5:0);
+    G.wrongIds.delete(q.id);
+    G.topicStats[q.t].c++;
+    burst(document.querySelector('.question-card'),'#22c55e');
+  }else{QZ.wrong++;G.wrongIds.add(q.id);}
+  saveG();buildHome();
+  setTimeout(()=>document.getElementById('feedback').scrollIntoView({behavior:'smooth',block:'nearest'}),150);
+}
+
+function toggleDetail(){
+  const d=document.getElementById('fb-detail');d.classList.toggle('show');
+  document.getElementById('fb-more-btn').textContent=d.classList.contains('show')?'✖ סגור':'📖 פרטים נוספים';
+}
+
+function nextQ(){
+  if(QZ.cur<QZ.qs.length-1){QZ.cur++;renderQ();document.getElementById('scroll').scrollTop=0;}
+  else showResults();
+}
+
+function showResults(){
+  const tot=QZ.qs.length;
+  const pct=Math.round(QZ.correct/tot*100);
+  const elapsed=Math.round((Date.now()-QZ.startTime)/1000);
+  const emojis=['😞','😐','🙂','😊','🏆'];
+  const titles=['צריך עוד תרגול','ממשיך להתקדם!','ביצוע טוב!','כמעט שם!','מצוין מאוד!'];
+  const idx=Math.min(4,Math.floor(pct/20));
+  document.getElementById('res-e').textContent=emojis[idx];
+  document.getElementById('res-t').textContent=titles[idx];
+  const rs=document.getElementById('res-s');
+  rs.textContent=pct+'%';rs.className='res-score '+(pct>=80?'great':pct>=60?'ok':'poor');
+  document.getElementById('res-sub').textContent=`${tot} שאלות · ${elapsed} שניות`;
+  document.getElementById('rc-ok').textContent=QZ.correct;
+  document.getElementById('rc-wr').textContent=QZ.wrong;
+  document.getElementById('rc-tm').textContent=elapsed;
+  document.getElementById('rc-pt').textContent=G.score;
+  showScr('results');
+}
+
+/* ══ FLASHCARDS ══ */
+function showFlash(){
+  FLASH={cards:shuffle([...FC]),idx:0,flipped:false};
+  renderCard();showScr('flash');
+}
+function renderCard(){
+  const c=FLASH.cards[FLASH.idx];const tot=FLASH.cards.length;
+  document.getElementById('fc-ctr').textContent=`כרטיס ${FLASH.idx+1} מתוך ${tot}`;
+  document.getElementById('fc-fill').style.width=((FLASH.idx+1)/tot*100)+'%';
+  document.getElementById('fc-tag').textContent='📚 '+c.t;
+  document.getElementById('fc-q').textContent=c.q;
+  document.getElementById('fc-a').textContent=c.a;
+  document.getElementById('fc-a').className='fc-a';
+  document.getElementById('fc-div').className='fc-divider';
+  document.getElementById('fc-hint').className='fc-hint';
+  FLASH.flipped=false;
+}
+function flipCard(){
+  FLASH.flipped=!FLASH.flipped;
+  document.getElementById('fc-a').classList.toggle('show',FLASH.flipped);
+  document.getElementById('fc-div').classList.toggle('show',FLASH.flipped);
+  document.getElementById('fc-hint').classList.toggle('hide',FLASH.flipped);
+}
+function nextCard(){FLASH.idx=(FLASH.idx+1)%FLASH.cards.length;renderCard();}
+function prevCard(){FLASH.idx=(FLASH.idx-1+FLASH.cards.length)%FLASH.cards.length;renderCard();}
+
+/* ══ STATS ══ */
+function showStats(){
+  const pct=G.totalAnswered>0?Math.round(G.totalCorrect/G.totalAnswered*100):0;
+  const lvl=pct>=85?'מתווך מוסמך 🏆':pct>=70?'כמעט שם 🎯':pct>=50?'מתקדם 📚':'מתחיל 📖';
+  let html=`<div class="stat-hero">
+    <div class="sh-avatar">${pct>=80?'🏆':pct>=60?'🎯':'📚'}</div>
+    <div class="sh-title">${lvl}</div>
+    <div class="sh-sub">${G.totalAnswered} שאלות תורגלו · ${pct}% הצלחה</div>
+  </div>
+  <div class="stats-grid2">
+    <div class="scard"><span class="sc-val g">${G.totalCorrect}</span><span class="sc-lbl">✅ תשובות נכונות</span></div>
+    <div class="scard"><span class="sc-val r">${G.totalAnswered-G.totalCorrect}</span><span class="sc-lbl">❌ תשובות שגויות</span></div>
+    <div class="scard"><span class="sc-val a">${G.score}</span><span class="sc-lbl">⭐ ניקוד כולל</span></div>
+    <div class="scard"><span class="sc-val b">${G.wrongIds.size}</span><span class="sc-lbl">📌 לחזרה</span></div>
+  </div>
+  <div class="topic-stats">
+    <div class="ts-header">ביצוע לפי נושא</div>`;
+  TOPICS.forEach(t=>{
+    const ts=G.topicStats[t.id]||{c:0,t:0};
+    const p=ts.t>0?Math.round(ts.c/ts.t*100):0;
+    const tot=Q.filter(q=>q.t===t.id).length;
+    html+=`<div class="ts-row">
+      <div class="ts-icon">${t.icon}</div>
+      <div class="ts-info">
+        <div class="ts-name">${t.name}</div>
+        <div class="ts-bar-wrap"><div class="ts-bar" style="width:${p}%"></div></div>
+      </div>
+      <div class="ts-pct">${ts.t>0?p+'%':'—'}</div>
+    </div>`;
+  });
+  html+=`</div>
+  <div class="danger-zone">
+    <div style="font-size:13px;color:var(--gray500)">איפוס כל ההתקדמות</div>
+    <button class="dz-btn" onclick="if(confirm('למחוק את כל ההתקדמות?')){localStorage.removeItem('tv2');location.reload();}">🗑️ איפוס</button>
+  </div>`;
+  document.getElementById('stats-content').innerHTML=html;
+  showScr('stats');
+}
+
+/* ══ HELPERS ══ */
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+function toast(msg,type='info'){
+  const t=document.getElementById('toast');t.textContent=msg;t.className='toast show '+type;
+  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2500);
+}
+function burst(el,color){
+  if(!el)return;const r=el.getBoundingClientRect();const cx=r.left+r.width/2,cy=r.top+r.height/2;
+  for(let i=0;i<8;i++){const p=document.createElement('div');p.className='particle';const sz=4+Math.random()*5;const ang=Math.random()*Math.PI*2;const d=35+Math.random()*55;p.style.cssText=`width:${sz}px;height:${sz}px;background:${color};left:${cx}px;top:${cy}px;--tx:${Math.cos(ang)*d}px;--ty:${Math.sin(ang)*d}px;animation-duration:.8s`;document.body.appendChild(p);setTimeout(()=>p.remove(),900);}
+}
+function closeInst(){document.getElementById('iov').classList.remove('show');document.getElementById('ish').classList.remove('show');}
+
+// iOS install
+(function(){
+  const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
+  const standalone=window.navigator.standalone===true;
+  if(isIOS&&!standalone&&!localStorage.getItem('tv2_inst')){
+    setTimeout(()=>{document.getElementById('iov').classList.add('show');document.getElementById('ish').classList.add('show');},5000);
+    localStorage.setItem('tv2_inst','1');
+  }
+})();
+
+/* ══ INIT ══ */
+loadG();buildHome();updateDiffInfo();
+</script>
+</body>
+</html>
